@@ -1,0 +1,59 @@
+{
+  "app_name": "એઆઈ સ્કિન હેલ્થ",
+  "nav": { "upload": "ત્વચા સ્કેન કરો", "dashboard": "ડેશબોર્ડ", "doctors": "ત્વચારોગ નિષ્ણાત શોધો", "login": "લોગ ઇન કરો", "register": "સાઇન અપ કરો", "logout": "લોગ આઉટ" },
+  "auth": {
+    "login_title": "ફરી પાછા આવવા બદલ આભાર",
+    "register_title": "તમારું ખાતું બનાવો",
+    "full_name": "પૂરું નામ",
+    "email": "ઈમેલ સરનામું",
+    "password": "પાસવર્ડ",
+    "login_button": "લોગ ઇન કરો",
+    "register_button": "ખાતું બનાવો",
+    "forgot_password": "પાસવર્ડ ભૂલી ગયા?"
+  },
+  "upload": {
+    "title": "ત્વચાના ભાગનો સ્પષ્ટ ફોટો અપલોડ કરો",
+    "subtitle": "સારો પ્રકાશ, કોઈ બ્લર નહીં અને નજીકથી લીધેલો ફોટો સૌથી સચોટ પરિણામ આપે છે.",
+    "drop_text": "ફોટો ખેંચીને છોડો, અથવા ક્લિક કરીને પસંદ કરો",
+    "analyze_button": "ફોટોનું વિશ્લેષણ કરો",
+    "analyzing": "વિશ્લેષણ ચાલુ છે..."
+  },
+  "results": {
+    "title": "સ્કેન પરિણામો",
+    "primary_prediction": "સૌથી શક્ય સ્થિતિ",
+    "confidence": "વિશ્વાસ સ્તર",
+    "severity": "ગંભીરતા",
+    "explanation_title": "મોડેલે આ આગાહી કેમ કરી",
+    "view_recommendations": "ભલામણો જુઓ",
+    "download_report": "પીડીએફ રિપોર્ટ ડાઉનલોડ કરો",
+    "skin_care": "ત્વચાની સંભાળ",
+    "lifestyle": "જીવનશૈલી સલાહ",
+    "diet_eat": "આહાર સલાહ (ખાઓ)",
+    "diet_avoid": "ટાળો (ન ખાઓ)",
+    "medication": "દવાઓની માહિતી (શૈક્ષણિક)",
+    "emergency": "જો આ લક્ષણો હોય તો તરત સારવાર લો:",
+    "guidance_title": "શૈક્ષણિક માર્ગદર્શન અને જીવનશૈલી સહાય",
+    "image_quality_warning": "ફોટો ગુણવત્તા ચેતવણી:",
+    "read_aloud": "વાંચીને સંભળાવો",
+    "stop_reading": "રોકો",
+    "confidence_match": "{{pct}}% મેળ",
+    "scan_another": "બીજો ફોટો સ્કેન કરો",
+    "consult_doctor": "ભારતમાં ત્વચારોગ નિષ્ણાતની સલાહ લો",
+    "scan_history": "સ્કેન યાદી જુઓ",
+    "seek_care": "જો આ લક્ષણો હોય તો તરત સારવાર લો:"
+  },
+  "diseases": {
+    "Eczema": "એક્ઝીમા",
+    "Warts_Viral_Infections": "મસાઓ અને અન્ય વાયરલ ઇન્ફેક્શન",
+    "Melanoma": "મેલાનોમા (ત્વચાનું કેન્સર)",
+    "Atopic_Dermatitis": "એટોપિક ડર્મેટોઇટિસ",
+    "Basal_Cell_Carcinoma": "બેઝલ સેલ કાર્સિનોમા (બીસીસી)",
+    "Melanocytic_Nevi": "મેલાનોસાઇટીક નેવી (તલ)",
+    "Benign_Keratosis": "સૌમ્ય કેરાટોસિસ જેવા ઘા",
+    "Psoriasis_Lichen_Planus": "સોરાયસીસ અને લાઇકેન પ્લેનસ",
+    "Seborrheic_Keratoses": "સેબોરેહિક કેરાટોસીસ અને સૌમ્ય ગાંઠો",
+    "Tinea_Fungal_Infections": "ટીનીયા અને ફંગલ ઇન્ફેક્શન",
+    "Healthy_Skin": "સ્વસ્થ ત્વચા"
+  },
+  "disclaimer": "આ ટૂલ માત્ર શૈક્ષણિક હેતુઓ માટે છે અને તે વ્યાવસાયિક તબીબી સલાહ, નિદાન અથવા સારવારનો વિકલ્પ નથી."
+}

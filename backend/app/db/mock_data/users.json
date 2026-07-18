@@ -1,0 +1,38 @@
+[
+  {
+    "full_name": "Krishna Patel",
+    "email": "krishna@example.com",
+    "hashed_password": "$2b$12$5cbey7OfOOVabFzn9w9TaOINoVLtYCB3mWk5iCkqhALr1mtGLk9nO",
+    "role": "user",
+    "preferred_language": "en",
+    "is_verified": false,
+    "created_at": "2026-06-26T09:38:10.163004+00:00",
+    "favorite_doctors": [],
+    "favorite_hospitals": [],
+    "_id": "6a3e48820c7c56925b729ee3"
+  },
+  {
+    "full_name": "Krishna Patel",
+    "email": "krishna+new@example.com",
+    "hashed_password": "$2b$12$N/BnN0UHIpy1IADsxwJqx.VHYInyYu5LNkI3emFFcTSSyunr7yK7W",
+    "role": "user",
+    "preferred_language": "en-US",
+    "is_verified": false,
+    "created_at": "2026-06-26T09:42:35.960744+00:00",
+    "favorite_doctors": [],
+    "favorite_hospitals": [],
+    "_id": "6a3e498b3b5c4af8baea6199"
+  },
+  {
+    "full_name": "kd",
+    "email": "patel@gmail.com",
+    "hashed_password": "$2b$12$kWc1uK7kgFkkAGQIjVl4E.7g4iH27JifOgJJDaEeksiSdHA0NDAlS",
+    "role": "user",
+    "preferred_language": "en",
+    "is_verified": false,
+    "created_at": "2026-06-26T09:57:57.110809+00:00",
+    "favorite_doctors": [],
+    "favorite_hospitals": [],
+    "_id": "6a3e4d253b5c4af8baea61a0"
+  }
+]

@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+venv/
+ENV/
+env/
+.venv/
+
+# Node dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Pytest / logs
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+mock_emails.txt
+
+# Local Uploads and generated reports
+static/uploads/*
+!static/uploads/.gitkeep
+test_report.pdf
+*.pdf
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+.system_generated/
+
+# Large model files
+*.keras
+backend/ml/saved_model/
+backend/ml/test_saved_model/
+backend/ml/test_saved_model/logs/

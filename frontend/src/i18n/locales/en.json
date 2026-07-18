@@ -1,0 +1,59 @@
+{
+  "app_name": "AI Skin Health",
+  "nav": { "upload": "Scan Skin", "dashboard": "Dashboard", "doctors": "Find a Dermatologist", "login": "Log in", "register": "Sign up", "logout": "Log out" },
+  "auth": {
+    "login_title": "Welcome back",
+    "register_title": "Create your account",
+    "full_name": "Full name",
+    "email": "Email address",
+    "password": "Password",
+    "login_button": "Log in",
+    "register_button": "Create account",
+    "forgot_password": "Forgot password?"
+  },
+  "upload": {
+    "title": "Upload a clear photo of the skin area",
+    "subtitle": "Good lighting, no blur, and a close-up view give the most reliable result.",
+    "drop_text": "Drag and drop an image, or click to browse",
+    "analyze_button": "Analyze image",
+    "analyzing": "Analyzing image..."
+  },
+  "results": {
+    "title": "Scan results",
+    "primary_prediction": "Most likely condition",
+    "confidence": "Confidence",
+    "severity": "Severity",
+    "explanation_title": "Why the model predicted this",
+    "view_recommendations": "View recommendations",
+    "download_report": "Download PDF report",
+    "skin_care": "Recommended Skin Care",
+    "lifestyle": "Lifestyle Recommendations",
+    "diet_eat": "Diet Suggestions (Eat)",
+    "diet_avoid": "Diet Warnings (Avoid)",
+    "medication": "Educational Medication Info",
+    "emergency": "Seek immediate medical care if:",
+    "guidance_title": "Educational Guidance & Lifestyle Support",
+    "image_quality_warning": "Image Quality Warning:",
+    "read_aloud": "Read Aloud",
+    "stop_reading": "Stop Reading",
+    "confidence_match": "{{pct}}% Match",
+    "scan_another": "Scan another image",
+    "consult_doctor": "Consult Dermatologist in India",
+    "scan_history": "View Scan History",
+    "seek_care": "Seek immediate medical care if:"
+  },
+  "diseases": {
+    "Eczema": "Eczema",
+    "Warts_Viral_Infections": "Warts, Molluscum & Other Viral Infections",
+    "Melanoma": "Melanoma",
+    "Atopic_Dermatitis": "Atopic Dermatitis",
+    "Basal_Cell_Carcinoma": "Basal Cell Carcinoma (BCC)",
+    "Melanocytic_Nevi": "Melanocytic Nevi (Mole)",
+    "Benign_Keratosis": "Benign Keratosis-like Lesions",
+    "Psoriasis_Lichen_Planus": "Psoriasis, Lichen Planus & Related Diseases",
+    "Seborrheic_Keratoses": "Seborrheic Keratoses & Benign Tumors",
+    "Tinea_Fungal_Infections": "Tinea, Ringworm & Fungal Infections",
+    "Healthy_Skin": "Healthy Skin"
+  },
+  "disclaimer": "This tool is for educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment."
+}

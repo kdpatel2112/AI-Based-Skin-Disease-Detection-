@@ -1,0 +1,67 @@
+[
+  {
+    "id": "hos_001",
+    "name": "Civil Hospital Ahmedabad",
+    "type": "Government",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Asarwa, Ahmedabad",
+    "latitude": 23.0469,
+    "longitude": 72.6034,
+    "emergency": true,
+    "phone": "+91-79-22683721",
+    "_id": "6a3e47a7647c4be409c77bab"
+  },
+  {
+    "id": "hos_002",
+    "name": "Apollo Hospitals Ahmedabad",
+    "type": "Private",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Bhat, Gandhinagar-Ahmedabad",
+    "latitude": 23.1167,
+    "longitude": 72.6019,
+    "emergency": true,
+    "phone": "+91-79-66701800",
+    "_id": "6a3e47a7647c4be409c77bac"
+  },
+  {
+    "id": "hos_003",
+    "name": "Lilavati Hospital",
+    "type": "Private",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "Bandra West, Mumbai",
+    "latitude": 19.0509,
+    "longitude": 72.8295,
+    "emergency": true,
+    "phone": "+91-22-26751000",
+    "_id": "6a3e47a7647c4be409c77bad"
+  },
+  {
+    "id": "hos_004",
+    "name": "AIIMS Delhi",
+    "type": "Government",
+    "city": "Delhi",
+    "state": "Delhi",
+    "address": "Ansari Nagar, New Delhi",
+    "latitude": 28.5672,
+    "longitude": 77.21,
+    "emergency": true,
+    "phone": "+91-11-26588500",
+    "_id": "6a3e47a7647c4be409c77bae"
+  },
+  {
+    "id": "hos_005",
+    "name": "Manipal Hospital",
+    "type": "Private",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "address": "Old Airport Road, Bengaluru",
+    "latitude": 12.9591,
+    "longitude": 77.6481,
+    "emergency": true,
+    "phone": "+91-80-25024444",
+    "_id": "6a3e47a7647c4be409c77baf"
+  }
+]

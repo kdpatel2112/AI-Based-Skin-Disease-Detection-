@@ -1,0 +1,155 @@
+{
+  "Eczema": {
+    "description": "Eczema (excluding Atopic Dermatitis) includes contact dermatitis, nummular eczema, and dyshidrotic eczema. It causes itchy, inflamed, and sometimes blistering skin.",
+    "symptoms": ["Itchy skin", "Dry, red, or brownish patches", "Small raised bumps that may leak fluid", "Crusted or scaly skin", "Raw, sensitive skin from scratching"],
+    "causes": ["Allergen exposure (soaps, cosmetics, nickel)", "Irritants (detergents, chemicals)", "Cold, dry weather", "Stress"],
+    "risk_factors": ["Sensitive skin history", "Frequent handwashing", "Exposure to chemical irritants at work", "Dry climates"],
+    "prevention": ["Identify and avoid triggers/irritants", "Wear protective gloves when handling chemicals", "Apply barrier creams regularly"],
+    "self_care": ["Apply a thick, fragrance-free moisturizer twice daily", "Take short, lukewarm baths or showers", "Use gentle, soap-free cleansers"],
+    "when_to_consult_doctor": ["Symptoms do not improve with OTC creams", "Skin is extremely painful or starts oozing yellow fluid", "Itching disrupts sleep"],
+    "emergency_signs": ["Fever with rapid spreading redness, warmth, or red streaks (secondary cellulitis)"],
+    "faqs": [
+      {"q": "Is eczema contagious?", "a": "No, eczema is an inflammatory skin reaction and cannot be spread from person to person."},
+      {"q": "What is the difference between eczema and atopic dermatitis?", "a": "Atopic dermatitis is a specific genetic, chronic form of eczema linked to allergies and asthma. Other eczemas may be temporary reactions to irritants."}
+    ]
+  },
+  "Warts_Viral_Infections": {
+    "description": "Viral skin infections including Common Warts, Verrucas, and Molluscum Contagiosum, caused by viruses (such as HPV or Molluscum Contagiosum virus) invading the top layer of skin.",
+    "symptoms": ["Small, fleshy, grainy bumps", "Rough, hard growths (warts)", "Smooth, firm, dome-shaped bumps with a central dimple (molluscum)", "Black pinpoints on warts (clotted blood vessels)"],
+    "causes": ["Human Papillomavirus (HPV) infection", "Molluscum Contagiosum virus", "Direct skin-to-skin contact", "Sharing towels or personal items"],
+    "risk_factors": ["Children and young adults", "Weakened immune systems", "Using public showers or swimming pools barefoot", "Warm, humid environments"],
+    "prevention": ["Avoid touching other people's warts or bumps", "Wear sandals in public showers and pool areas", "Do not share towels, socks, or shoes"],
+    "self_care": ["Keep growths clean and dry", "Use OTC salicylic acid treatments for warts (avoid on face)", "Cover warts with a bandage to prevent spreading"],
+    "when_to_consult_doctor": ["Growths are painful, bleeding, or changing color", "Growths appear on the face or genitals", "Multiple new lesions appear rapidly"],
+    "emergency_signs": ["Severe spreading infection or redness around a lesion accompanied by high fever"],
+    "faqs": [
+      {"q": "How long do warts last?", "a": "Many warts go away on their own within 1-2 years, but treatments can help speed up the process."},
+      {"q": "Is molluscum contagiosum dangerous?", "a": "No, it is a benign (harmless) viral infection, though it is highly contagious and spreads easily among children."}
+    ]
+  },
+  "Melanoma": {
+    "description": "Melanoma is the most serious type of skin cancer. It develops in the melanocytes (melanin-producing cells) and can metastasize to other organs if not caught early.",
+    "symptoms": ["A mole that changes in size, shape, or color", "Asymmetrical mole structure", "Irregular, notched, or blurred borders", "Multiple colors within one mole", "Mole diameter larger than 6mm", "Mole that bleeds, oozes, or feels itchy"],
+    "causes": ["DNA damage to skin cells, primarily caused by ultraviolet (UV) radiation from sunlight or tanning beds", "Genetic mutations"],
+    "risk_factors": ["Fair skin, freckles, and light hair", "History of sunburns", "Excessive sun/UV exposure", "Having many moles or atypical moles", "Family history of melanoma"],
+    "prevention": ["Apply broad-spectrum SPF 30+ sunscreen daily", "Avoid direct sun exposure between 10 AM and 4 PM", "Never use tanning beds", "Perform monthly skin checks"],
+    "self_care": ["Professional medical evaluation and surgical excision are required immediately. Self-care alone is unsafe."],
+    "when_to_consult_doctor": ["Any mole that matches the ABCDE criteria (Asymmetry, Border, Color, Diameter, Evolving)", "A new pigmented growth on previously clear skin"],
+    "emergency_signs": ["Rapidly growing, bleeding, or ulcerated dark lesion - seek urgent dermatology evaluation immediately."],
+    "faqs": [
+      {"q": "Can melanoma be cured?", "a": "Yes, if diagnosed and treated in its early stages, melanoma has a very high cure rate."},
+      {"q": "Where does melanoma usually appear?", "a": "In men, it often appears on the trunk (chest/back). In women, it is most common on the legs. However, it can develop anywhere, including under fingernails or on palms."}
+    ]
+  },
+  "Atopic_Dermatitis": {
+    "description": "Atopic Dermatitis is a chronic, genetic, inflammatory skin condition characterized by dry, extremely itchy skin, often associated with asthma and hay fever.",
+    "symptoms": ["Intense, persistent itching (especially at night)", "Dry, sensitive skin", "Red, inflamed patches on face, neck, elbows, and knees", "Thickened, leathery skin from scratching"],
+    "causes": ["Genetic mutations affecting the skin barrier (e.g., filaggrin gene)", "Immune system overreaction", "Environmental triggers (dust mites, pollen, pet dander)"],
+    "risk_factors": ["Family history of atopic dermatitis, asthma, or hay fever", "Living in cold, dry, or polluted climates", "Early childhood onset"],
+    "prevention": ["Apply thick moisturizers immediately after bathing", "Avoid harsh soaps and fragrances", "Maintain stable indoor humidity"],
+    "self_care": ["Moisturize multiple times daily", "Keep fingernails short to prevent scratching damage", "Wear soft, breathable cotton clothing"],
+    "when_to_consult_doctor": ["Itching interferes with sleep or daily activities", "Signs of infection like yellow crusts, pus, or oozing", "Symptoms worsen despite regular moisturizing"],
+    "emergency_signs": ["Widespread painful blisters, skin peeling, and high fever (possible eczema herpeticum)"],
+    "faqs": [
+      {"q": "Is atopic dermatitis hereditary?", "a": "Yes, it strongly runs in families with a history of allergic conditions (the 'atopic triad' of eczema, asthma, and hay fever)."},
+      {"q": "Does atopic dermatitis go away as children grow up?", "a": "Many children experience significant improvement or complete resolution of symptoms by adolescence, though some have lifelong dry, sensitive skin."}
+    ]
+  },
+  "Basal_Cell_Carcinoma": {
+    "description": "Basal Cell Carcinoma (BCC) is the most common form of skin cancer. It grows slowly and rarely spreads to other parts of the body, but can cause localized tissue destruction if untreated.",
+    "symptoms": ["A pearly or waxy bump", "A flat, flesh-colored or brown scar-like lesion", "A bleeding or scabbing sore that heals and returns", "A pink growth with slightly raised borders and a crusted center"],
+    "causes": ["Long-term, cumulative exposure to ultraviolet (UV) radiation from the sun"],
+    "risk_factors": ["Fair skin", "Chronic sun exposure (e.g., outdoor workers)", "Older age", "History of radiation therapy", "Personal history of skin cancer"],
+    "prevention": ["Use broad-spectrum SPF 30+ sunscreen daily", "Wear wide-brimmed hats and UV-blocking sunglasses", "Avoid midday sun and outdoor tanning"],
+    "self_care": ["Requires professional dermatologist diagnosis and surgical excision or treatment. Self-treatment is not possible."],
+    "when_to_consult_doctor": ["Any skin sore or growth that fails to heal within three to four weeks", "A pearly bump that slowly enlarges"],
+    "emergency_signs": ["Rapid bleeding or infected skin growth causing localized swelling and fever"],
+    "faqs": [
+      {"q": "Is basal cell carcinoma life-threatening?", "a": "It is rarely life-threatening because it grows very slowly and rarely metastasizes, but it must be removed to prevent damage to surrounding skin and bone."},
+      {"q": "What is the primary treatment for BCC?", "a": "Minor surgical excision, Mohs micrographic surgery, or cryotherapy, usually performed in a dermatologist's clinic."}
+    ]
+  },
+  "Melanocytic_Nevi": {
+    "description": "Melanocytic Nevi, commonly known as moles, are benign, common growths on the skin caused by a cluster of melanocytes (pigment-producing cells).",
+    "symptoms": ["Symmetric, round or oval shape", "Smooth, uniform color (tan, brown, or black)", "Flat or slightly raised surface", "Sharp, well-defined borders", "Usually stable in size and appearance"],
+    "causes": ["Proliferation of benign melanocytes in the skin layers", "Genetic factors", "Sun exposure during childhood"],
+    "risk_factors": ["Fair skin", "Frequent sun exposure in youth", "Family history of multiple moles"],
+    "prevention": ["Sun protection helps prevent the formation of new moles and reduces the risk of malignant changes in existing moles."],
+    "self_care": ["Perform monthly checks to monitor for changes in size, shape, color, or symmetry."],
+    "when_to_consult_doctor": ["A mole becomes asymmetrical, develops irregular borders, exhibits multiple colors, grows larger than 6mm, or starts bleeding/itching"],
+    "emergency_signs": [],
+    "faqs": [
+      {"q": "Can a benign mole turn into cancer?", "a": "Most benign moles never become cancerous, but a small percentage can transition into melanoma. Regular monitoring is key."},
+      {"q": "Is it safe to remove moles at home?", "a": "No, self-removal of moles can cause severe infections, scarring, and leaves no tissue for biopsy, which is critical to rule out cancer."}
+    ]
+  },
+  "Benign_Keratosis": {
+    "description": "Benign Keratosis-like Lesions (BKL) comprise harmless skin growths including seborrheic keratosis, solar lentigines, and lichen planus-like keratosis, which often resemble skin cancers but are benign.",
+    "symptoms": ["Waxy, scaly, or 'stuck-on' appearance", "Color ranging from light tan to dark brown or black", "Round or oval shaped, often small but can grow to an inch or more", "Flat or slightly raised rough surface"],
+    "causes": ["Natural skin aging", "Cumulative sun exposure (solar lentigines)", "Genetic predisposition"],
+    "risk_factors": ["Age over 40", "Fair skin", "Family history of seborrheic keratoses"],
+    "prevention": ["Protect skin from sun damage to limit solar lentigines and potential actinic growths."],
+    "self_care": ["Keep skin moisturized. Avoid picking or scratching the growths, which can cause bleeding or infection."],
+    "when_to_consult_doctor": ["Growths grow rapidly, bleed, or become inflamed", "A growth looks dark, irregular, or has multiple colors (to rule out melanoma)"],
+    "emergency_signs": [],
+    "faqs": [
+      {"q": "Are keratosis-like lesions contagious?", "a": "No, they are completely non-infectious aging/sun-related growths and cannot spread to others."},
+      {"q": "Do benign keratoses need to be removed?", "a": "No, they do not require treatment unless they become irritated by clothing or are cosmetically undesirable, in which case they can be frozen off."}
+    ]
+  },
+  "Psoriasis_Lichen_Planus": {
+    "description": "This group includes Psoriasis (an autoimmune condition causing rapid skin cell buildup into thick, silvery scales) and Lichen Planus (an inflammatory condition causing itchy, purple, flat-topped bumps).",
+    "symptoms": ["Red patches of skin covered with thick, silvery scales (Psoriasis)", "Dry, cracked skin that may bleed", "Itching, burning, or soreness", "Itchy, purple, flat-topped bumps, often on wrists or ankles (Lichen Planus)", "Lacy white patches in the mouth"],
+    "causes": ["Immune system dysfunction causing accelerated skin cell turnover or inflammatory attacks on skin/mucous membranes", "Genetic triggers"],
+    "risk_factors": ["Family history of psoriasis", "High stress levels", "Smoking and alcohol consumption", "Certain viral infections (Hepatitis C is linked to Lichen Planus)"],
+    "prevention": ["Avoid skin injuries (scratches, sunburns)", "Manage stress", "Maintain a healthy lifestyle and avoid smoking"],
+    "self_care": ["Moisturize daily with heavy creams", "Take warm baths with Epsom salts or oatmeal", "Limit alcohol intake"],
+    "when_to_consult_doctor": ["Joint pain, stiffness, or swelling (indicative of psoriatic arthritis)", "Widespread rash covering more than 10% of the body", "Plaques cause severe pain or bleed easily"],
+    "emergency_signs": ["Widespread redness and peeling skin over the entire body accompanied by chills and high fever (possible erythrodermic psoriasis)"],
+    "faqs": [
+      {"q": "Can psoriasis affect the joints?", "a": "Yes, up to 30% of people with psoriasis develop psoriatic arthritis, which causes joint pain and stiffness."},
+      {"q": "Is lichen planus a permanent condition?", "a": "Lichen planus on the skin usually resolves on its own within 1-2 years, though oral lichen planus can be chronic and require ongoing management."}
+    ]
+  },
+  "Seborrheic_Keratoses": {
+    "description": "Seborrheic Keratoses are highly common, benign (non-cancerous) skin growths that appear as waxy, scaly, or 'stuck-on' spots. They are a normal part of the skin's aging process.",
+    "symptoms": ["Waxy, paste-like, or rough 'stuck-on' appearance", "Colors ranging from yellow-tan to dark brown or black", "Usually oval or round shape", "Can appear on the face, chest, shoulders, or back"],
+    "causes": ["Proliferation of epidermal keratinocytes", "Genetic predisposition (often runs in families)", "Age-related changes"],
+    "risk_factors": ["Age over 50", "Family history of seborrheic keratosis"],
+    "prevention": ["No known prevention methods as they are related to genetics and natural skin aging."],
+    "self_care": ["Avoid scratching or picking at the lesions, which can lead to bleeding, pain, and secondary infection."],
+    "when_to_consult_doctor": ["A growth changes rapidly, bleeds, or becomes highly irritated", "A lesion is black or has a highly irregular border (to distinguish from melanoma)"],
+    "emergency_signs": [],
+    "faqs": [
+      {"q": "Is seborrheic keratosis skin cancer?", "a": "No, seborrheic keratoses are completely benign and never turn into skin cancer."},
+      {"q": "Can they be removed?", "a": "Yes, dermatologists can easily remove them using cryotherapy (freezing), shave excision, or electrocautery."}
+    ]
+  },
+  "Tinea_Fungal_Infections": {
+    "description": "Fungal skin infections (Tinea) caused by dermatophyte fungi, including ringworm, athlete's foot (tinea pedis), jock itch (tinea cruris), and tinea versicolor.",
+    "symptoms": ["Red, itchy, circular rash with raised, scaly edges (ringworm)", "Cracked, peeling, itchy skin between the toes (athlete's foot)", "Red, itchy, burning rash in the groin area (jock itch)", "Discolored skin patches (lighter or darker) on the chest or back"],
+    "causes": ["Dermatophyte fungi infecting the dead keratin layers of skin", "Warm, humid weather", "Sharing clothing, towels, or bedsheets with an infected person"],
+    "risk_factors": ["Excessive sweating", "Wearing tight, synthetic clothing", "Using public gyms, showers, or locker rooms without footwear", "Weakened immune system"],
+    "prevention": ["Keep skin clean and dry, especially in skin folds", "Wear breathable cotton clothing", "Change socks and underwear daily", "Wear flip-flops in public locker rooms"],
+    "self_care": ["Apply OTC antifungal creams (clotrimazole, miconazole, terbinafine) daily as directed", "Keep the infected area clean and dry", "Wash towels and bedding in hot water"],
+    "when_to_consult_doctor": ["Infection does not improve after 2 weeks of OTC treatment", "Infection spreads to the scalp or nails", "Redness spreads rapidly with severe pain"],
+    "emergency_signs": ["Fever with spreading redness, warmth, swelling, or red streaks (secondary bacterial infection)"],
+    "faqs": [
+      {"q": "Is ringworm caused by a worm?", "a": "No, ringworm is a fungal infection of the skin. The name comes from the characteristic ring-like shape of the rash."},
+      {"q": "Can I catch a fungal infection from pets?", "a": "Yes, dogs and cats can carry ringworm and easily transmit it to humans through direct contact."}
+    ]
+  },
+  "Healthy_Skin": {
+    "description": "No disease detected. Skin is healthy and functions normally.",
+    "symptoms": [],
+    "causes": [],
+    "risk_factors": [],
+    "prevention": ["Use sunscreen daily", "Maintain a simple skin routine", "Stay hydrated"],
+    "self_care": ["Cleanse and moisturize skin twice daily"],
+    "when_to_consult_doctor": ["If new rashes, spots, or changing moles develop in the future"],
+    "emergency_signs": [],
+    "faqs": [
+      {"q": "How often should I check my skin?", "a": "A monthly self-exam of your skin is recommended to notice any changes early."}
+    ]
+  }
+}

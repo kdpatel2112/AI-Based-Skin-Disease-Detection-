@@ -1,0 +1,141 @@
+{
+  "doctors": [
+    {
+      "id": "doc_001",
+      "name": "Dr. Anjali Mehta",
+      "specialization": "Dermatologist",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "clinic_name": "SkinCare Clinic, Navrangpura",
+      "address": "3rd Floor, Ratnam Mall, Navrangpura, Ahmedabad",
+      "latitude": 23.0339,
+      "longitude": 72.5619,
+      "rating": 4.7,
+      "reviews_count": 342,
+      "phone": "+91-79-12345678",
+      "timings": "10:00 AM - 6:00 PM (Mon-Sat)"
+    },
+    {
+      "id": "doc_002",
+      "name": "Dr. Rakesh Shah",
+      "specialization": "Cosmetic Dermatologist",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "clinic_name": "Glow Derma, Satellite",
+      "address": "Shilp Corporate Park, Satellite, Ahmedabad",
+      "latitude": 23.0225,
+      "longitude": 72.5300,
+      "rating": 4.5,
+      "reviews_count": 210,
+      "phone": "+91-79-23456789",
+      "timings": "11:00 AM - 7:00 PM (Mon-Sat)"
+    },
+    {
+      "id": "doc_003",
+      "name": "Dr. Priya Nair",
+      "specialization": "Dermatologist",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "clinic_name": "Mumbai Skin Institute",
+      "address": "Linking Road, Bandra West, Mumbai",
+      "latitude": 19.0596,
+      "longitude": 72.8295,
+      "rating": 4.8,
+      "reviews_count": 512,
+      "phone": "+91-22-34567890",
+      "timings": "9:00 AM - 5:00 PM (Mon-Sat)"
+    },
+    {
+      "id": "doc_004",
+      "name": "Dr. Vikram Singh",
+      "specialization": "Dermatologist",
+      "city": "Delhi",
+      "state": "Delhi",
+      "clinic_name": "Capital Derma Care",
+      "address": "Connaught Place, New Delhi",
+      "latitude": 28.6315,
+      "longitude": 77.2167,
+      "rating": 4.6,
+      "reviews_count": 398,
+      "phone": "+91-11-45678901",
+      "timings": "10:00 AM - 6:00 PM (Mon-Sat)"
+    },
+    {
+      "id": "doc_005",
+      "name": "Dr. Kavya Reddy",
+      "specialization": "Pediatric Dermatologist",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "clinic_name": "Bangalore Skin & Hair Clinic",
+      "address": "Indiranagar, Bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.6412,
+      "rating": 4.9,
+      "reviews_count": 601,
+      "phone": "+91-80-56789012",
+      "timings": "9:30 AM - 5:30 PM (Mon-Sat)"
+    }
+  ],
+  "hospitals": [
+    {
+      "id": "hos_001",
+      "name": "Civil Hospital Ahmedabad",
+      "type": "Government",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "address": "Asarwa, Ahmedabad",
+      "latitude": 23.0469,
+      "longitude": 72.6034,
+      "emergency": true,
+      "phone": "+91-79-22683721"
+    },
+    {
+      "id": "hos_002",
+      "name": "Apollo Hospitals Ahmedabad",
+      "type": "Private",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "address": "Bhat, Gandhinagar-Ahmedabad",
+      "latitude": 23.1167,
+      "longitude": 72.6019,
+      "emergency": true,
+      "phone": "+91-79-66701800"
+    },
+    {
+      "id": "hos_003",
+      "name": "Lilavati Hospital",
+      "type": "Private",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "address": "Bandra West, Mumbai",
+      "latitude": 19.0509,
+      "longitude": 72.8295,
+      "emergency": true,
+      "phone": "+91-22-26751000"
+    },
+    {
+      "id": "hos_004",
+      "name": "AIIMS Delhi",
+      "type": "Government",
+      "city": "Delhi",
+      "state": "Delhi",
+      "address": "Ansari Nagar, New Delhi",
+      "latitude": 28.5672,
+      "longitude": 77.2100,
+      "emergency": true,
+      "phone": "+91-11-26588500"
+    },
+    {
+      "id": "hos_005",
+      "name": "Manipal Hospital",
+      "type": "Private",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "address": "Old Airport Road, Bengaluru",
+      "latitude": 12.9591,
+      "longitude": 77.6481,
+      "emergency": true,
+      "phone": "+91-80-25024444"
+    }
+  ]
+}
