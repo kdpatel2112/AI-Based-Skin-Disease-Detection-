@@ -158,3 +158,4 @@ purposes. AI predictions, recommendations, and educational medication
 information are not substitutes for professional medical advice, diagnosis,
 or treatment. Users should consult qualified healthcare professionals before
 making medical decisions.
+https://ai-based-skin-disease-detection-two.vercel.app/upload
