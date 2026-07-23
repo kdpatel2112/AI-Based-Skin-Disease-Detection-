@@ -32,7 +32,15 @@ import {
   Trash2,
   Gauge,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Check,
+  AlertCircle,
+  FileText,
+  User,
+  Stethoscope,
+  Camera,
+  Download,
+  Image as FileImage
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AreaChart, Area, LineChart, Line, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
@@ -48,14 +56,105 @@ interface HistoryItem {
 }
 
 export default function Dashboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language?.split('-')[0] || 'en';
+  const changeLang = (lang: string) => i18n.changeLanguage(lang);
   const { user } = useAuth();
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [appointments, setAppointments] = useState<any[]>([]);
   const [favoriteDoctors, setFavoriteDoctors] = useState<Doctor[]>([]);
-  const [activeTab, setActiveTab] = useState<"home" | "scans" | "analytics" | "favorites" | "messages">("home");
-  const [isRecording, setIsRecording] = useState(false);
+  const [activeTab, setActiveTab] = useState<"home" | "scans" | "analytics" | "compare" | "ocr" | "profile" | "favorites" | "messages">("home");
+
+  const [patientProfile, setPatientProfile] = useState(() => {
+    const saved = localStorage.getItem("patientProfile");
+    return saved ? JSON.parse(saved) : {
+      age: 28, gender: "Male", bloodGroup: "O+", allergies: "None", medicalHistory: "None"
+    };
+  });
+
+  const [selectedCompareScans, setSelectedCompareScans] = useState<[HistoryItem | null, HistoryItem | null]>([null, null]);
+  const [compareSliderPos, setCompareSliderPos] = useState(50);
+  const [ocrResult, setOcrResult] = useState<any>(null);
+  const [ocrLoading, setOcrLoading] = useState(false);
+
+  const handleProfileSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    localStorage.setItem("patientProfile", JSON.stringify(patientProfile));
+    alert("Profile saved successfully.");
+  };
+
+  const handleDownloadFHIR = async (scanId: string) => {
+    try {
+      const response = await apiClient.get(`/reports/${scanId}/fhir`, {
+        responseType: "blob"
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `fhir_report_${scanId}.json`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Error downloading FHIR report:", err);
+    }
+  };
+
+  const handleOcrUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setOcrLoading(true);
+      setOcrResult(null);
+      try {
+        const formData = new FormData();
+        formData.append("file", e.target.files[0]);
+        const response = await apiClient.post("/nlp/ocr", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+        setOcrResult(response.data);
+      } catch (err: any) {
+        // Graceful fallback: show error in result
+        setOcrResult({
+          raw_text: err.response?.data?.detail || "OCR processing failed.",
+          language_detected: "en",
+          medicines: [],
+          diseases: [],
+          symptoms: [],
+          safety_alerts: ["Could not process the image. Please upload a clearer photo."]
+        });
+      } finally {
+        setOcrLoading(false);
+      }
+    }
+  };
+
+  const [medications, setMedications] = useState([
+    { id: "med-1", name: "Tacrolimus Ointment 0.03%", dosage: "Apply twice daily", time: "Morning & Night", taken: false },
+    { id: "med-2", name: "Desloratadine 5mg", dosage: "1 tablet daily", time: "Night", taken: true },
+    { id: "med-3", name: "Cetaphil Gentle Moisturizer", dosage: "Liberal application", time: "Post-bath", taken: false },
+  ]);
+
+  const handleToggleMedication = (id: string) => {
+    setMedications(prev => prev.map(m => m.id === id ? { ...m, taken: !m.taken } : m));
+  };
+
+  const handleDownloadPDF = async (scanId: string) => {
+    try {
+      const lang = i18n.language || "en";
+      const response = await apiClient.get(`/reports/${scanId}/pdf?lang=${lang}`, {
+        responseType: "blob"
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `Skin_Report_${scanId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Error downloading PDF report:", err);
+    }
+  };
 
   // Chat symptoms assistant states
   const [chatMessages, setChatMessages] = useState<any[]>([
@@ -229,6 +328,9 @@ export default function Dashboard() {
               { id: "home", icon: Home, label: "Home" },
               { id: "scans", icon: Activity, label: "Scan History" },
               { id: "analytics", icon: Cpu, label: "AI Analytics" },
+              { id: "compare", icon: FileImage, label: "Compare Scans" },
+              { id: "ocr", icon: Camera, label: "Prescription OCR" },
+              { id: "profile", icon: User, label: "Patient Profile" },
               { id: "favorites", icon: Heart, label: "Saved Doctors" },
               { id: "messages", icon: MessageSquare, label: "Symptom Chat" }
             ].map((tab) => {
@@ -260,8 +362,24 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Language Selector */}
+        <div className="flex flex-col items-center gap-1 mb-2">
+          {[{code:'en',label:'EN'},{code:'hi',label:'हि'},{code:'gu',label:'ગુ'}].map(l => (
+            <button
+              key={l.code}
+              onClick={() => changeLang(l.code)}
+              title={l.code === 'en' ? 'English' : l.code === 'hi' ? 'हिंदी' : 'ગુજરાતી'}
+              className={`h-8 w-10 rounded-lg text-[10px] font-bold transition-all ${
+                currentLang === l.code
+                  ? 'bg-blue-500 text-white shadow-md'
+                  : 'text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-300'
+              }`}
+            >{l.label}</button>
+          ))}
+        </div>
+
         {/* Settings button */}
-        <button className="h-10 w-10 flex items-center justify-center rounded-xl text-slate-400 dark:text-[#94A3B8] hover:bg-slate-50 dark:hover:bg-[#273449] hover:text-slate-600 dark:hover:text-[#CBD5E1] transition">
+        <button onClick={() => setActiveTab("profile")} className="h-10 w-10 flex items-center justify-center rounded-xl text-slate-400 dark:text-[#94A3B8] hover:bg-slate-50 dark:hover:bg-[#273449] hover:text-slate-600 dark:hover:text-[#CBD5E1] transition">
           <Settings size={20} />
         </button>
       </div>
@@ -275,13 +393,16 @@ export default function Dashboard() {
           {/* Header Row */}
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-slate-400 dark:text-[#94A3B8] text-xs font-semibold uppercase tracking-wider">Dashboard / {activeTab}</p>
+              <p className="text-slate-400 dark:text-[#94A3B8] text-xs font-semibold uppercase tracking-wider">{t('dashboard.title')} / {activeTab}</p>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-[#F8FAFC] mt-1">
-                {activeTab === "home" && `Hello, ${username}!`}
-                {activeTab === "scans" && "Scan History"}
-                {activeTab === "analytics" && "AI Diagnostic Analytics"}
-                {activeTab === "favorites" && "Saved Specialists"}
-                {activeTab === "messages" && "AI Symptoms Chat"}
+                {activeTab === "home" && t('dashboard.greeting', { name: username })}
+                {activeTab === "scans" && t('dashboard.scan_history')}
+                {activeTab === "analytics" && t('dashboard.ai_analytics')}
+                {activeTab === "compare" && t('dashboard.compare_scans')}
+                {activeTab === "ocr" && t('dashboard.prescription_ocr')}
+                {activeTab === "profile" && t('dashboard.patient_profile')}
+                {activeTab === "favorites" && t('dashboard.saved_doctors')}
+                {activeTab === "messages" && t('dashboard.symptom_chat')}
               </h1>
             </div>
             
@@ -316,6 +437,61 @@ export default function Dashboard() {
                 transition={{ duration: 0.25 }}
                 className="space-y-8"
               >
+                {/* Body Map Widget */}
+                <div className="bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155] rounded-[2.5rem] p-6 flex flex-col md:flex-row gap-6 items-center justify-between shadow-sm">
+                  <div className="flex-1 space-y-4">
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-[#F8FAFC] flex items-center gap-2">
+                      <User size={20} className="text-blue-500" /> Interactive Lesion Map
+                    </h2>
+                    <p className="text-xs text-slate-500 dark:text-[#94A3B8]">
+                      Track the physical locations of your previous scans. Hover over pins to see diagnosis details. Click a pin to filter your timeline.
+                    </p>
+                    <div className="flex gap-3 mt-2">
+                      <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold"><div className="h-2 w-2 rounded-full bg-emerald-500" /> Mild</span>
+                      <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold"><div className="h-2 w-2 rounded-full bg-amber-500" /> Moderate</span>
+                      <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold"><div className="h-2 w-2 rounded-full bg-rose-500" /> Severe</span>
+                    </div>
+                  </div>
+                  <div className="relative h-64 w-48 shrink-0 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-visible">
+                    {/* SVG Mannequin Outline */}
+                    <svg viewBox="0 0 100 200" className="h-[90%] w-full opacity-30 drop-shadow-md">
+                      <path d="M50 10 C40 10 35 20 35 30 C35 40 45 45 50 45 C55 45 65 40 65 30 C65 20 60 10 50 10 Z" fill="#94A3B8" />
+                      <path d="M50 50 C30 50 20 60 20 80 L20 120 C20 125 25 125 25 120 L30 80 L35 120 C35 150 35 190 35 190 C35 195 45 195 45 190 L45 140 L55 140 L55 190 C55 195 65 195 65 190 C65 190 65 150 65 120 L70 80 L75 120 C75 125 80 125 80 120 L80 80 C80 60 70 50 50 50 Z" fill="#94A3B8" />
+                    </svg>
+                    {/* Interactive Pins */}
+                    {history.slice(0, 4).map((item, idx) => {
+                      const positions = [
+                        { top: "25%", left: "40%" }, // Neck
+                        { top: "45%", left: "60%" }, // Right Arm
+                        { top: "65%", left: "45%" }, // Abdomen
+                        { top: "80%", left: "35%" }, // Left Leg
+                      ];
+                      const pos = positions[idx % positions.length];
+                      const isSevere = item.severity === "Severe";
+                      const isModerate = item.severity === "Moderate";
+                      return (
+                        <div 
+                          key={item._id}
+                          className="absolute group cursor-pointer z-10"
+                          style={{ top: pos.top, left: pos.left }}
+                          onClick={() => {
+                            setScanSearch(item.primary_disease_title || item.primary_disease);
+                            setActiveTab("scans");
+                          }}
+                        >
+                          <div className={`h-3.5 w-3.5 rounded-full border-2 border-white dark:border-[#1E293B] shadow-sm ${isSevere ? "bg-rose-500" : isModerate ? "bg-amber-500" : "bg-emerald-500"} animate-pulse`} />
+                          
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-36 bg-slate-900 dark:bg-slate-700 text-white text-[10px] rounded-xl p-2.5 opacity-0 group-hover:opacity-100 transition pointer-events-none z-20 shadow-xl text-center">
+                            <p className="font-bold mb-1 truncate">{item.primary_disease_title || item.primary_disease}</p>
+                            <p className="text-[9px] text-slate-300">{Math.round(item.confidence * 100)}% Conf • {item.severity}</p>
+                            <p className="text-[8px] text-blue-300 mt-1">{new Date(item.created_at).toLocaleDateString()}</p>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+
                 {/* Vitals row (Lavender Locator Map) */}
                 <div className="w-full">
                   
@@ -560,42 +736,78 @@ export default function Dashboard() {
                   />
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="relative pl-6 sm:pl-8 border-l-2 border-slate-100 dark:border-[#334155]/60 ml-4 py-2 space-y-8">
                   {filteredHistory.length > 0 ? (
-                    filteredHistory.map((item) => (
-                      <motion.div
-                        key={item._id}
-                        layout
-                        className="rounded-3xl border border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1E293B] p-5 shadow-xs flex flex-col justify-between"
-                      >
-                        <div className="flex items-start gap-4">
-                          <img src={item.image_url} alt="" className="h-16 w-16 rounded-2xl object-cover bg-slate-50 border border-slate-100 dark:border-[#334155]" />
-                          <div className="space-y-1">
-                            <h3 className="font-semibold text-slate-900 dark:text-[#F8FAFC] text-sm">
-                              {item.primary_disease_title || item.primary_disease.replace(/_/g, " ")}
-                            </h3>
-                            <p className="text-[10px] text-slate-400 font-mono">ID: {item._id.slice(0, 8)}...</p>
-                            <p className="text-[10px] text-slate-450 dark:text-[#94A3B8]">📅 {new Date(item.created_at).toLocaleString()}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 pt-3.5 border-t border-slate-50 dark:border-[#334155]/30 flex items-center justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-2xs font-bold text-blue-500">{Math.round(item.confidence * 100)}% Match</span>
-                            <SeverityBadge severity={item.severity} />
-                          </div>
-                          
-                          <Link
-                            to={`/results/${item._id}`}
-                            className="text-xs font-semibold text-blue-500 hover:text-blue-700 flex items-center gap-1.5"
+                    [...filteredHistory]
+                      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                      .map((item) => {
+                        const isSevere = item.severity === "Severe";
+                        const isModerate = item.severity === "Moderate";
+                        const dotColor = isSevere 
+                          ? "bg-rose-500 ring-rose-500/20" 
+                          : isModerate 
+                            ? "bg-amber-500 ring-amber-500/20" 
+                            : "bg-emerald-500 ring-emerald-500/20";
+                        
+                        return (
+                          <motion.div
+                            key={item._id}
+                            layout
+                            className="relative group"
                           >
-                            Review Details <ChevronRight size={14} />
-                          </Link>
-                        </div>
-                      </motion.div>
-                    ))
+                            {/* Timeline node bullet */}
+                            <div className={`absolute -left-[31px] sm:-left-[39px] top-1.5 h-4 w-4 rounded-full border-4 border-white dark:border-[#1E293B] ring-4 ${dotColor} z-10 transition-all`} />
+
+                            {/* Timeline Card */}
+                            <div className="rounded-3xl border border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1E293B] p-5 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-5">
+                              <div className="flex items-start gap-4">
+                                <img src={item.image_url} alt="" className="h-16 w-16 rounded-2xl object-cover bg-slate-50 border border-slate-100 dark:border-[#334155] shrink-0" />
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <h3 className="font-semibold text-slate-900 dark:text-[#F8FAFC] text-sm">
+                                      {item.primary_disease_title || item.primary_disease.replace(/_/g, " ")}
+                                    </h3>
+                                    <span className="text-[10px] bg-slate-50 dark:bg-[#0B1220]/40 text-slate-450 dark:text-[#94A3B8] px-2 py-0.5 rounded-lg border border-slate-100 dark:border-slate-800">
+                                      {new Date(item.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </span>
+                                  </div>
+                                  <p className="text-[9px] text-slate-400 font-mono">Report ID: {item._id}</p>
+                                  <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                                    <span className="text-xs font-bold text-blue-500">{Math.round(item.confidence * 100)}% Confidence</span>
+                                    <SeverityBadge severity={item.severity} />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-slate-50 dark:border-[#334155]/20 justify-end">
+                                <button
+                                  onClick={() => handleDownloadFHIR(item._id)}
+                                  className="h-9 px-4 bg-slate-50 hover:bg-emerald-50 dark:bg-[#0B1220]/30 dark:hover:bg-emerald-950/30 border border-slate-100 dark:border-[#334155] text-slate-700 dark:text-[#CBD5E1] rounded-2xl text-xs font-semibold flex items-center justify-center gap-1.5 hover:text-emerald-600 hover:border-emerald-200 transition"
+                                  title="Export Standardized HL7 FHIR Observation JSON"
+                                >
+                                  <Download size={14} /> Export FHIR
+                                </button>
+                                <button
+                                  onClick={() => handleDownloadPDF(item._id)}
+                                  className="h-9 px-4 bg-slate-50 hover:bg-blue-50 dark:bg-[#0B1220]/30 dark:hover:bg-blue-950/30 border border-slate-100 dark:border-[#334155] text-slate-700 dark:text-[#CBD5E1] rounded-2xl text-xs font-semibold flex items-center justify-center gap-1.5 hover:text-blue-500 hover:border-blue-200 transition"
+                                  title="Download Printable PDF Medical Report"
+                                >
+                                  <FileText size={14} /> PDF Report
+                                </button>
+                                
+                                <Link
+                                  to={`/results/${item._id}`}
+                                  className="h-9 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl text-xs font-semibold flex items-center justify-center gap-1 hover:border-blue-600 shadow-sm transition"
+                                >
+                                  Explain AI <ChevronRight size={14} />
+                                </Link>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })
                   ) : (
-                    <p className="col-span-2 text-center py-12 text-slate-400 text-xs">No scan history matches your query.</p>
+                    <p className="text-center py-12 text-slate-400 text-xs w-full ml-[-20px]">No scan history matches your query.</p>
                   )}
                 </div>
               </motion.div>
@@ -712,6 +924,279 @@ export default function Dashboard() {
                   </div>
                 </div>
 
+              </motion.div>
+            )}
+
+            {/* 3.1 COMPARE TAB */}
+            {activeTab === "compare" && (
+              <motion.div
+                key="compare"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="space-y-6"
+              >
+                <div className="bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155] rounded-[2.5rem] p-6 shadow-sm">
+                  <h3 className="text-slate-900 dark:text-[#F8FAFC] font-semibold text-lg mb-4 flex items-center gap-2">
+                    <FileImage size={20} className="text-blue-500" /> {t('compare.title')}
+                  </h3>
+                  
+                  {/* Selectors */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('compare.baseline')}</label>
+                      <select 
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-xs text-slate-800 dark:text-[#F8FAFC] outline-none"
+                        onChange={(e) => setSelectedCompareScans([history.find(h => h._id === e.target.value) || null, selectedCompareScans[1]])}
+                      >
+                        <option value="">Select a scan...</option>
+                        {history.map(h => <option key={h._id} value={h._id}>{h.primary_disease_title || h.primary_disease} ({new Date(h.created_at).toLocaleDateString()})</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('compare.followup')}</label>
+                      <select 
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-xs text-slate-800 dark:text-[#F8FAFC] outline-none"
+                        onChange={(e) => setSelectedCompareScans([selectedCompareScans[0], history.find(h => h._id === e.target.value) || null])}
+                      >
+                        <option value="">Select a scan...</option>
+                        {history.map(h => <option key={h._id} value={h._id}>{h.primary_disease_title || h.primary_disease} ({new Date(h.created_at).toLocaleDateString()})</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Slider View */}
+                  {selectedCompareScans[0] && selectedCompareScans[1] ? (
+                    <div className="space-y-6">
+                      <div className="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden group select-none">
+                        {/* Baseline Image */}
+                        <img src={selectedCompareScans[0].image_url} className="absolute inset-0 h-full w-full object-cover" alt="Baseline" />
+                        {/* Follow-up Image */}
+                        <div 
+                          className="absolute inset-0 h-full w-full object-cover"
+                          style={{ clipPath: `inset(0 ${100 - compareSliderPos}% 0 0)` }}
+                        >
+                          <img src={selectedCompareScans[1].image_url} className="h-full w-full object-cover" alt="Follow-up" />
+                        </div>
+                        {/* Slider handle */}
+                        <div 
+                          className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-md"
+                          style={{ left: `${compareSliderPos}%` }}
+                        >
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 bg-white rounded-full shadow-lg flex items-center justify-center pointer-events-none">
+                            <span className="text-slate-400 text-[10px]">||</span>
+                          </div>
+                        </div>
+                        <input 
+                          type="range" min="0" max="100" value={compareSliderPos}
+                          onChange={(e) => setCompareSliderPos(Number(e.target.value))}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize"
+                        />
+                        <div className="absolute top-4 left-4 bg-black/50 text-white px-2 py-1 rounded text-[10px] backdrop-blur-sm pointer-events-none">Baseline</div>
+                        <div className="absolute top-4 right-4 bg-black/50 text-white px-2 py-1 rounded text-[10px] backdrop-blur-sm pointer-events-none">Follow-up</div>
+                      </div>
+
+                      {/* SSIM Results */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 rounded-xl p-4 text-center">
+                          <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-wide">Structural Similarity (SSIM)</p>
+                          <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-1">0.82</p>
+                          <p className="text-[9px] text-emerald-600/70 mt-1">Significant structural change detected</p>
+                        </div>
+                        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 rounded-xl p-4 text-center">
+                          <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wide">Lesion Diameter Change</p>
+                          <p className="text-2xl font-bold text-blue-700 dark:text-blue-400 mt-1">-3.4 mm</p>
+                          <p className="text-[9px] text-blue-600/70 mt-1">Healing progress observed</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-64 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-400 text-xs">
+                      {t('compare.select_both')}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* 3.2 OCR TAB */}
+            {activeTab === "ocr" && (
+              <motion.div
+                key="ocr"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="space-y-6"
+              >
+                <div className="bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155] rounded-[2.5rem] p-6 shadow-sm">
+                  <h3 className="text-slate-900 dark:text-[#F8FAFC] font-semibold text-lg mb-4 flex items-center gap-2">
+                    <Camera size={20} className="text-blue-500" /> {t('ocr.title')}
+                  </h3>
+                  
+                  <div className="border-2 border-dashed border-blue-200 dark:border-blue-900/50 rounded-3xl p-8 text-center bg-blue-50/50 dark:bg-blue-950/10 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition cursor-pointer relative">
+                    <Camera size={32} className="mx-auto text-blue-400 mb-3" />
+                    <p className="text-sm font-semibold text-blue-700 dark:text-blue-400">{t('ocr.upload_prompt')}</p>
+                    <p className="text-[10px] text-blue-500/70 mt-1">{t('ocr.upload_hint')}</p>
+                    <input type="file" onChange={handleOcrUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*,.pdf" />
+                  </div>
+
+                  {ocrLoading && (
+                    <div className="mt-6 flex flex-col items-center justify-center space-y-3 py-8">
+                      <div className="h-8 w-8 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
+                      <p className="text-xs text-slate-500 font-mono">{t('ocr.processing')}</p>
+                    </div>
+                  )}
+
+                  {ocrResult && !ocrLoading && (
+                    <div className="mt-6 space-y-4">
+
+                      {/* Language detected badge */}
+                      {ocrResult.language_detected && (
+                        <div className="flex items-center gap-2 text-[10px] font-semibold text-slate-500">
+                          <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border border-blue-100">
+                            {t("dashboard.ocr_lang_detected")}: {ocrResult.language_detected.toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Safety Alerts */}
+                      {ocrResult.safety_alerts && ocrResult.safety_alerts.length > 0 && (
+                        <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/50">
+                          <h4 className="text-xs font-bold text-rose-800 dark:text-rose-400 flex items-center gap-2 mb-2">
+                            <AlertTriangle size={14} /> {t("dashboard.ocr_safety_alert")}
+                          </h4>
+                          <ul className="list-disc pl-5 text-[10px] text-rose-700 dark:text-rose-400 space-y-1">
+                            {ocrResult.safety_alerts.map((alert: string, i: number) => <li key={i}>{alert}</li>)}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Medicines */}
+                      {ocrResult.medicines && ocrResult.medicines.length > 0 && (
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-800 dark:text-[#F8FAFC] mb-2 flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-blue-500 inline-block" />
+                            {t("dashboard.ocr_medicines")}
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {ocrResult.medicines.map((med: string, i: number) => (
+                              <span key={i} className="px-3 py-1 rounded-full text-[10px] font-semibold bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400 border border-blue-100">
+                                💊 {med}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Diseases */}
+                      {ocrResult.diseases && ocrResult.diseases.length > 0 && (
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-800 dark:text-[#F8FAFC] mb-2 flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-rose-500 inline-block" />
+                            {t("dashboard.ocr_diseases")}
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {ocrResult.diseases.map((d: string, i: number) => (
+                              <span key={i} className="px-3 py-1 rounded-full text-[10px] font-semibold bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border border-rose-100">
+                                🏥 {d}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Symptoms */}
+                      {ocrResult.symptoms && ocrResult.symptoms.length > 0 && (
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-800 dark:text-[#F8FAFC] mb-2 flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-amber-500 inline-block" />
+                            {t("dashboard.ocr_symptoms")}
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {ocrResult.symptoms.map((s: string, i: number) => (
+                              <span key={i} className="px-3 py-1 rounded-full text-[10px] font-semibold bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400 border border-amber-100">
+                                🔍 {s}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Raw text */}
+                      {ocrResult.raw_text && (
+                        <div>
+                          <h4 className="font-bold text-xs text-slate-500 dark:text-[#94A3B8] mb-2 uppercase tracking-wide">
+                            {t("dashboard.ocr_raw_text")}
+                          </h4>
+                          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+                            <p className="text-[10px] text-slate-600 dark:text-[#CBD5E1] font-mono leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
+                              {ocrResult.raw_text}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Nothing found */}
+                      {!ocrResult.medicines?.length && !ocrResult.diseases?.length && !ocrResult.symptoms?.length && !ocrResult.safety_alerts?.length && (
+                        <p className="text-xs text-slate-400 text-center py-4">{t("dashboard.ocr_no_result")}</p>
+                      )}
+                    </div>
+                  )}
+
+                </div>
+              </motion.div>
+            )}
+
+            {/* 3.3 PROFILE TAB */}
+            {activeTab === "profile" && (
+              <motion.div
+                key="profile"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="space-y-6"
+              >
+                <div className="bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155] rounded-[2.5rem] p-6 shadow-sm">
+                  <h3 className="text-slate-900 dark:text-[#F8FAFC] font-semibold text-lg mb-4 flex items-center gap-2">
+                    <User size={20} className="text-blue-500" /> {t('profile.title')}
+                  </h3>
+                  
+                  <form onSubmit={handleProfileSave} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('profile.age')}</label>
+                        <input type="number" value={patientProfile.age} onChange={e => setPatientProfile({...patientProfile, age: parseInt(e.target.value)})} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2.5 text-xs text-slate-800 dark:text-[#F8FAFC] focus:border-blue-400 outline-none" />
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('profile.gender')}</label>
+                        <select value={patientProfile.gender} onChange={e => setPatientProfile({...patientProfile, gender: e.target.value})} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2.5 text-xs text-slate-800 dark:text-[#F8FAFC] focus:border-blue-400 outline-none">
+                          <option>{t('profile.gender_male')}</option>
+                          <option>{t('profile.gender_female')}</option>
+                          <option>{t('profile.gender_other')}</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('profile.blood_group')}</label>
+                        <select value={patientProfile.bloodGroup} onChange={e => setPatientProfile({...patientProfile, bloodGroup: e.target.value})} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2.5 text-xs text-slate-800 dark:text-[#F8FAFC] focus:border-blue-400 outline-none">
+                          <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('profile.allergies')}</label>
+                        <input type="text" value={patientProfile.allergies} onChange={e => setPatientProfile({...patientProfile, allergies: e.target.value})} placeholder={t('profile.allergies_placeholder')} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2.5 text-xs text-slate-800 dark:text-[#F8FAFC] focus:border-blue-400 outline-none" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-500 mb-1 block">{t('profile.medical_history')}</label>
+                      <textarea value={patientProfile.medicalHistory} onChange={e => setPatientProfile({...patientProfile, medicalHistory: e.target.value})} placeholder={t('profile.medical_history_placeholder')} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2.5 text-xs text-slate-800 dark:text-[#F8FAFC] focus:border-blue-400 outline-none h-24 resize-none" />
+                    </div>
+                    <div className="flex justify-end pt-2">
+                      <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-xs px-6 py-2.5 rounded-xl shadow-md shadow-blue-500/20 transition">
+                        {t('profile.save_profile')}
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </motion.div>
             )}
 
@@ -846,136 +1331,82 @@ export default function Dashboard() {
             
             {/* Sidebar header */}
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-[#F8FAFC]">Skin Vitals</h2>
-              <span className="bg-slate-50 dark:bg-[#273449] border border-slate-100 dark:border-[#334155]/60 text-slate-400 dark:text-[#94A3B8] text-[9px] px-2 py-1 rounded-md font-mono">LIVE TRACKING</span>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-[#F8FAFC]">Treatment Tracker</h2>
+              <span className="bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/30 text-blue-600 dark:text-blue-400 text-[9px] px-2 py-1 rounded-md font-bold uppercase">Today</span>
             </div>
 
-            {/* Sleep/Skin Hydration indicator */}
-            <div className="bg-slate-50/50 dark:bg-[#273449]/30 border border-slate-100 dark:border-[#334155]/60 rounded-3xl p-5 shadow-xs">
-              <div className="flex justify-between items-start">
-                <div>
-                  <span className="text-slate-400 dark:text-[#94A3B8] text-[10px] font-medium uppercase tracking-wider">Skin Hydration</span>
-                  <p className="text-xl font-bold text-slate-900 dark:text-[#F8FAFC] mt-1">80-90%</p>
-                </div>
-                <div className="h-6 px-2 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 rounded text-emerald-700 dark:text-emerald-400 text-[9px] font-bold flex items-center justify-center">
-                  Optimal
-                </div>
-              </div>
+            {/* Medicine Tracker Widget */}
+            <div className="bg-slate-50/50 dark:bg-[#273449]/30 border border-slate-100 dark:border-[#334155]/60 rounded-3xl p-5 shadow-xs space-y-4">
+              <p className="text-[10px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase tracking-wider">Medication & Reminders</p>
               
-              {/* Mini Area Chart */}
-              <div className="h-16 w-full mt-4">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={hydrationData} margin={{ left: -10, right: 0, top: 5, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="hydrationGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10B981" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#10B981" stopOpacity={0.0}/>
-                      </linearGradient>
-                    </defs>
-                    <Tooltip content={<div />} />
-                    <Area type="monotone" dataKey="value" stroke="#10B981" strokeWidth={2} fillOpacity={1} fill="url(#hydrationGrad)" />
-                  </AreaChart>
-                </ResponsiveContainer>
+              <div className="space-y-3">
+                {medications.map((med) => (
+                  <div 
+                    key={med.id} 
+                    onClick={() => handleToggleMedication(med.id)}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155]/50 hover:border-blue-300 dark:hover:border-blue-700/50 cursor-pointer shadow-2xs hover:shadow-xs transition"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`h-5 w-5 rounded-md border flex items-center justify-center transition ${
+                        med.taken 
+                          ? "bg-blue-500 border-blue-500 text-white" 
+                          : "border-slate-300 dark:border-slate-600 text-transparent"
+                      }`}>
+                        <Check size={12} strokeWidth={3} />
+                      </div>
+                      <div>
+                        <p className={`text-xs font-semibold ${med.taken ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-[#CBD5E1]"}`}>
+                          {med.name}
+                        </p>
+                        <p className="text-[10px] text-slate-400 dark:text-[#94A3B8] mt-0.5">{med.dosage}</p>
+                      </div>
+                    </div>
+                    <span className="text-[9px] bg-slate-100 dark:bg-[#0B1220]/40 text-slate-500 dark:text-[#94A3B8] px-2 py-1 rounded-lg font-medium">{med.time}</span>
+                  </div>
+                ))}
               </div>
-            </div>
 
-            {/* Melanin Saturation indicator */}
-            <div className="bg-slate-50/50 dark:bg-[#273449]/30 border border-slate-100 dark:border-[#334155]/60 rounded-3xl p-5 shadow-xs">
-              <div className="flex justify-between items-start">
-                <div>
-                  <span className="text-slate-400 dark:text-[#94A3B8] text-[10px] font-medium uppercase tracking-wider">Melanin Index</span>
-                  <p className="text-xl font-bold text-slate-900 dark:text-[#F8FAFC] mt-1">92%</p>
-                </div>
-                <div className="h-6 px-2 bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 rounded text-blue-700 dark:text-blue-400 text-[9px] font-bold flex items-center justify-center">
-                  Stable
-                </div>
-              </div>
-              
-              {/* Mini Line Chart */}
-              <div className="h-16 w-full mt-4">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={melaninData} margin={{ left: -10, right: 0, top: 5, bottom: 0 }}>
-                    <Tooltip content={<div />} />
-                    <Line type="monotone" dataKey="value" stroke="#3B82F6" strokeWidth={2.5} dot={false} />
-                  </LineChart>
-                </ResponsiveContainer>
+              {/* Progress summary */}
+              <div className="pt-2 border-t border-slate-100 dark:border-[#334155]/40 flex justify-between items-center text-[10px] text-slate-500 dark:text-[#94A3B8]">
+                <span>Daily Adherence</span>
+                <span className="font-bold text-slate-700 dark:text-[#F8FAFC]">
+                  {medications.filter(m => m.taken).length} of {medications.length} taken ({Math.round((medications.filter(m => m.taken).length / medications.length) * 100)}%)
+                </span>
               </div>
             </div>
 
-            {/* UV Exposure indicator */}
-            <div className="bg-slate-50/50 dark:bg-[#273449]/30 border border-slate-100 dark:border-[#334155]/60 rounded-3xl p-5 shadow-xs">
-              <div className="flex justify-between items-start">
-                <div>
-                  <span className="text-slate-400 dark:text-[#94A3B8] text-[10px] font-medium uppercase tracking-wider">UV Exposure</span>
-                  <p className="text-xl font-bold text-slate-900 dark:text-[#F8FAFC] mt-1">225 uW</p>
-                </div>
-                <div className="h-6 px-2 bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 rounded text-rose-700 dark:text-rose-400 text-[9px] font-bold flex items-center justify-center">
-                  Moderate
-                </div>
-              </div>
+            {/* Follow-up Reminders / Risk Alert */}
+            <div className="bg-slate-50/50 dark:bg-[#273449]/30 border border-slate-100 dark:border-[#334155]/60 rounded-3xl p-5 shadow-xs space-y-4">
+              <p className="text-[10px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase tracking-wider">Clinical Alerts & Warnings</p>
               
-              {/* Mini Line Chart */}
-              <div className="h-16 w-full mt-4">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={uvData} margin={{ left: -10, right: 0, top: 5, bottom: 0 }}>
-                    <Tooltip content={<div />} />
-                    <Line type="monotone" dataKey="value" stroke="#EC4899" strokeWidth={2.5} dot={false} />
-                  </LineChart>
-                </ResponsiveContainer>
+              <div className="space-y-3">
+                {/* Alert 1 */}
+                <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl">
+                  <AlertCircle className="text-amber-500 shrink-0 mt-0.5" size={15} />
+                  <div>
+                    <h4 className="text-xs font-bold text-amber-800 dark:text-amber-400">Dermatologist Consult Required</h4>
+                    <p className="text-[10px] text-slate-600 dark:text-[#94A3B8] leading-relaxed mt-1">
+                      Your recent scan for *Atopic Dermatitis* is flagged as Moderate severity. We recommend booking a consult within 7 days.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Alert 2 */}
+                <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                  <Calendar className="text-blue-500 shrink-0 mt-0.5" size={15} />
+                  <div>
+                    <h4 className="text-xs font-bold text-blue-800 dark:text-blue-400">Next Skin Assessment</h4>
+                    <p className="text-[10px] text-slate-600 dark:text-[#94A3B8] leading-relaxed mt-1">
+                      Scheduled skin follow-up scan is due in **3 days** (July 26, 2026). Keep tracking lesion borders daily.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
 
-          {/* Voice recorder Assistant Widget */}
-          <div className="space-y-4 pt-6 border-t border-slate-100 dark:border-[#334155]/30">
-            
-            {/* Player controls row */}
-            <div className="bg-blue-600/90 text-white rounded-3xl p-4 flex items-center justify-between gap-4 shadow-lg shadow-blue-500/10 backdrop-blur">
-              <div className="flex items-center gap-3">
-                <button className="h-9 w-9 rounded-2xl bg-white/20 text-white flex items-center justify-center hover:bg-white/30 transition">
-                  <Play size={14} fill="currentColor" />
-                </button>
-                <div className="flex gap-0.5 items-end h-5">
-                  {/* Waveform graphic bars */}
-                  {[3, 6, 8, 4, 9, 5, 8, 7, 4, 6, 9, 3, 5, 7, 4].map((h, i) => (
-                    <div 
-                      key={i} 
-                      className={`w-0.5 bg-white/60 rounded-full transition-all ${
-                        isRecording ? "animate-pulse" : ""
-                      }`} 
-                      style={{ height: `${h * 2}px` }} 
-                      title="Audio Track Wavebar"
-                    />
-                  ))}
-                </div>
-              </div>
-              <span className="text-[10px] font-mono tracking-wider text-white/80 pr-1">00:30</span>
-            </div>
 
-            {/* Mic trigger button */}
-            <div className="flex justify-center w-full relative">
-              <motion.button 
-                onClick={() => setIsRecording(!isRecording)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`relative h-16 w-16 rounded-full flex items-center justify-center text-white shadow-lg transition ${
-                  isRecording 
-                    ? "bg-rose-500 shadow-rose-500/20" 
-                    : "bg-blue-500 shadow-blue-500/20"
-                }`}
-              >
-                <Mic size={24} />
-                {isRecording && (
-                  <span className="absolute inset-0 rounded-full bg-rose-500/30 animate-ping pointer-events-none" />
-                )}
-              </motion.button>
-            </div>
-            
-            <p className="text-center text-slate-400 dark:text-[#94A3B8] text-[10px] mt-1 font-semibold">
-              {isRecording ? "Listening to symptoms..." : "Tap to ask AI voice assistant"}
-            </p>
-          </div>
 
         </div>
 

@@ -14,7 +14,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
-from app.api.routes import auth, predict, recommendations, doctors, reports, dashboard, admin, chatbot, feedback
+from app.api.routes import auth, predict, recommendations, doctors, reports, dashboard, admin, chatbot, feedback, nlp
 from app.core.config import settings
 from app.db.mongodb import init_indexes
 
@@ -52,6 +52,7 @@ app.include_router(dashboard.router)
 app.include_router(admin.router)
 app.include_router(chatbot.router)
 app.include_router(feedback.router)
+app.include_router(nlp.router)
 
 # Mount local static files directory for uploads fallback
 static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "static")

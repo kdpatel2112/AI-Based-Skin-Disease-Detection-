@@ -323,14 +323,21 @@ def predict_image(image_bytes: bytes) -> dict:
         )
 
         top_class_idx = np.argmax(calibrated_preds)
-        try:
-            heatmap = make_gradcam_heatmap(tf.convert_to_tensor(img_array), model, top_class_idx)
-            overlay = overlay_heatmap_on_image(resized, heatmap)
-        except Exception:
-            heatmap = generate_synthetic_heatmap(resized.shape[:2])
-            overlay = overlay_heatmap_on_image(resized, heatmap)
-
-        mode = "model+tta"
+        if ranked[0][1] < 0.25:
+            # Untrained placeholder model detected (flat/uniform predictions)
+            # Fall back to calibrated smart mock predictor for realistic distributions
+            ranked, _ = _mock_predict(image_bytes)
+            heatmap = generate_synthetic_heatmap(image_bgr.shape[:2])
+            overlay = overlay_heatmap_on_image(image_bgr, heatmap)
+            mode = "mock (placeholder fallback)"
+        else:
+            try:
+                heatmap = make_gradcam_heatmap(tf.convert_to_tensor(img_array), model, top_class_idx)
+                overlay = overlay_heatmap_on_image(resized, heatmap)
+            except Exception:
+                heatmap = generate_synthetic_heatmap(resized.shape[:2])
+                overlay = overlay_heatmap_on_image(resized, heatmap)
+            mode = "model+tta"
 
     else:
         # Smart mock predictor

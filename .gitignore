@@ -29,9 +29,12 @@ mock_emails.txt
 
 # Local Uploads and generated reports
 static/uploads/*
+backend/static/uploads/*
 !static/uploads/.gitkeep
+backend/static/fonts/*.ttf
 test_report.pdf
 *.pdf
+
 
 # IDEs
 .vscode/

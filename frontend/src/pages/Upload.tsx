@@ -39,7 +39,7 @@ export default function Upload() {
           if (videoRef.current) videoRef.current.srcObject = s;
         })
         .catch(() => {
-          setError("Could not access camera. Check permissions or upload a file.");
+          setError(t("upload.camera_error"));
           setUseCamera(false);
         });
     } else {
@@ -117,7 +117,7 @@ export default function Upload() {
       const res = await apiClient.post("/predict", form, { headers: { "Content-Type": "multipart/form-data" } });
       navigate(`/results/${res.data.prediction_id}`, { state: res.data });
     } catch (err: any) {
-      setError(err.response?.data?.detail || "Could not analyze this image. Please try a different photo.");
+      setError(err.response?.data?.detail || t("common.error"));
     } finally {
       setIsAnalyzing(false);
     }
@@ -129,13 +129,13 @@ export default function Upload() {
       {/* Upper header */}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
         <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-1.5 text-xs font-semibold mb-4 shadow-2xs">
-          <Sparkles size={12} className="animate-pulse" /> AI Skin Analysis
+          <Sparkles size={12} className="animate-pulse" /> {t("auth.sparkles_hint")}
         </div>
         <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 dark:text-[#F8FAFC] leading-tight tracking-tight">
-          Analyze Your Skin
+          {t("upload.title")}
         </h1>
         <p className="mt-3 text-slate-500 dark:text-[#94A3B8] text-sm max-w-lg mx-auto leading-relaxed">
-          Upload a clear photo or capture a close-up scan to run our state-of-the-art dermatological classifier.
+          {t("upload.subtitle")}
         </p>
       </motion.div>
 
@@ -165,8 +165,8 @@ export default function Upload() {
         {/* Toggle Mode */}
         <div className="flex justify-center gap-2 bg-slate-50 dark:bg-[#0B1220] border border-slate-100 dark:border-[#334155] p-1.5 rounded-2xl mb-8">
           {[
-            { camera: false, Icon: ImagePlus, label: "Gallery File" },
-            { camera: true, Icon: Camera, label: "Live Camera" },
+            { camera: false, Icon: ImagePlus, label: t("upload.upload_file") },
+            { camera: true, Icon: Camera, label: t("upload.use_camera") },
           ].map(({ camera, Icon, label }) => (
             <button
               key={String(camera)}
@@ -217,7 +217,7 @@ export default function Upload() {
                     onClick={capturePhoto} 
                     className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-5 py-2.5 text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-blue-500/20 transition"
                   >
-                    <Camera size={14} /> Capture Scan
+                    <Camera size={14} /> {t("upload.capture_photo")}
                   </button>
                   <button
                     onClick={() => setUseCamera(false)}
@@ -251,7 +251,7 @@ export default function Upload() {
                         <span className="truncate max-w-[190px]">{file.name}</span>
                       </span>
                       <div className="flex items-center gap-1 text-[10px] text-slate-400 dark:text-[#94A3B8] font-mono font-medium">
-                        <Sliders size={11} /> Ready to check
+                        <Sliders size={11} /> {t("upload.quality_check")}
                       </div>
                     </motion.div>
                   )}
@@ -283,14 +283,14 @@ export default function Upload() {
             }`}
           >
             {isAnalyzing ? (
-              <><RefreshCw size={16} className="animate-spin" /> Analyzing Image Matrix...</>
+              <><RefreshCw size={16} className="animate-spin" /> {t("upload.analyzing")}</>
             ) : (
-              <><Zap size={16} /> Run Diagnosis Check</>
+              <><Zap size={16} /> {t("upload.analyze_button")}</>
             )}
           </button>
           {file && !isAnalyzing && (
             <p className="mt-2 text-[10px] text-slate-400">
-              Your photo is ready — click to initiate AI inference.
+              {t("upload.supported_formats")}
             </p>
           )}
         </div>
@@ -321,9 +321,9 @@ export default function Upload() {
       {/* Medical disclaimer footer */}
       <div className="mx-auto mt-16 max-w-lg border-t border-slate-100 dark:border-[#334155] pt-5 text-[10px] text-slate-400 leading-relaxed">
         <p className="flex items-center justify-center gap-1 font-semibold text-slate-500 dark:text-[#94A3B8] mb-1">
-          <Shield size={12} /> Medical Disclaimer
+          <Shield size={12} /> {t("upload.tip_label")}
         </p>
-        The results provided by this system are compiled for educational screening purposes. They do not constitute official clinical diagnoses. Consult a licensed dermatologist for all pathological concerns.
+        {t("disclaimer")}
       </div>
 
     </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { Search, MapPin, Phone, Clock, Star, Heart, Calendar, AlertCircle, Navigation, Shield, X, Check } from "lucide-react";
@@ -6,12 +6,31 @@ import { apiClient } from "../api/client";
 import { Doctor } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
 
-// SVG path coordinates for key Indian states for the interactive map
-const STATE_MAP_DATA = [
-  { id: "Gujarat", name: "Gujarat", path: "M 20 60 L 50 50 L 60 70 L 40 90 L 15 80 Z" },
-  { id: "Maharashtra", name: "Maharashtra", path: "M 40 90 L 60 70 L 90 95 L 75 130 L 45 120 Z" },
-  { id: "Delhi", name: "Delhi", path: "M 70 30 L 80 25 L 85 35 L 75 40 Z" },
-  { id: "Karnataka", name: "Karnataka", path: "M 45 120 L 75 130 L 80 170 L 60 190 L 40 160 Z" },
+import { STATE_MAP_DATA } from "./india_map_constant";
+
+const ACTIVE_STATES = [
+  "Gujarat", "Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", 
+  "Chandigarh", "Haryana", "Telangana", "West Bengal", "Puducherry", 
+  "Rajasthan", "Madhya Pradesh", "Uttar Pradesh", "Kerala"
+];
+
+const POPULAR_CITIES = [
+  { name: "Ahmedabad", state: "Gujarat" },
+  { name: "Mumbai", state: "Maharashtra" },
+  { name: "Delhi", state: "Delhi" },
+  { name: "Bengaluru", state: "Karnataka" },
+  { name: "Pune", state: "Maharashtra" },
+  { name: "Surat", state: "Gujarat" },
+  { name: "Hyderabad", state: "Telangana" },
+  { name: "Indore", state: "Madhya Pradesh" },
+  { name: "Kochi", state: "Kerala" },
+  { name: "Lucknow", state: "Uttar Pradesh" },
+];
+
+const SUGGESTED_CITIES = [
+  "Ahmedabad", "Anand", "Bengaluru", "Bhopal", "Delhi", "Hyderabad", "Indore", "Junagadh", 
+  "Karamsad", "Kochi", "Lucknow", "Mehsana", "Mumbai", "Navsari", "Patan", "Pune", 
+  "Surat", "Thiruvananthapuram", "Vadnagar", "Valsad"
 ];
 
 export default function Doctors() {
@@ -23,6 +42,7 @@ export default function Doctors() {
   const [hospitals, setHospitals] = useState<any[]>([]);
   const [city, setCity] = useState(locationState?.city || "");
   const [selectedState, setSelectedState] = useState<string>("");
+  const [showCitySuggestions, setShowCitySuggestions] = useState(false);
   
   // Favorites and Appointments
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -35,6 +55,19 @@ export default function Doctors() {
     notes: "",
   });
   const [bookingSuccess, setBookingSuccess] = useState(false);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
+        setShowCitySuggestions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     // Load favorites from localStorage
@@ -127,7 +160,7 @@ export default function Doctors() {
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#94A3B8] mb-4">Location Filters</h3>
             
             <div className="space-y-4">
-              <div className="relative">
+              <div className="relative" ref={suggestionsRef}>
                 <Search className="absolute left-3 top-3 text-slate-400 dark:text-[#94A3B8]" size={15} />
                 <input
                   placeholder="Search by city (e.g. Mumbai)"
@@ -136,8 +169,62 @@ export default function Doctors() {
                     setCity(e.target.value);
                     setSelectedState("");
                   }}
+                  onFocus={() => setShowCitySuggestions(true)}
                   className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] pl-9 pr-4 py-2.5 text-xs outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 placeholder-slate-400 dark:placeholder-[#64748B] text-slate-800 dark:text-[#CBD5E1] transition"
                 />
+                {showCitySuggestions && (
+                  <div className="absolute z-50 left-0 right-0 mt-1.5 p-3 bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155] rounded-2xl shadow-xl max-h-60 overflow-y-auto">
+                    {city.trim() === "" ? (
+                      <div>
+                        <p className="text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase tracking-wider mb-2">Suggested Cities</p>
+                        <div className="grid grid-cols-2 gap-1.5">
+                          {POPULAR_CITIES.map((item) => (
+                            <button
+                              key={item.name}
+                              type="button"
+                              onClick={() => {
+                                setCity(item.name);
+                                setSelectedState(item.state);
+                                setShowCitySuggestions(false);
+                              }}
+                              className="text-left px-2.5 py-1.5 text-[10px] rounded-lg bg-slate-50 hover:bg-blue-50 dark:bg-[#0B1220]/30 dark:hover:bg-blue-950/30 text-slate-600 dark:text-[#CBD5E1] border border-slate-100/50 dark:border-[#334155]/20 hover:border-blue-200 transition-all font-medium"
+                            >
+                              {item.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      (() => {
+                        const filteredCities = SUGGESTED_CITIES.filter(c => 
+                          c.toLowerCase().includes(city.toLowerCase()) && c.toLowerCase() !== city.toLowerCase()
+                        );
+                        return filteredCities.length > 0 ? (
+                          <div className="space-y-1">
+                            <p className="text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase tracking-wider mb-2">Suggested Matches</p>
+                            {filteredCities.map((cityName) => (
+                              <button
+                                key={cityName}
+                                type="button"
+                                onClick={() => {
+                                  setCity(cityName);
+                                  const stateObj = POPULAR_CITIES.find(pc => pc.name === cityName);
+                                  if (stateObj) setSelectedState(stateObj.state);
+                                  setShowCitySuggestions(false);
+                                }}
+                                className="w-full text-left px-2.5 py-2 text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-[#0B1220]/40 text-slate-700 dark:text-[#CBD5E1] transition-colors"
+                              >
+                                {cityName}
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-[10px] text-slate-400 text-center py-2">No suggested cities match</p>
+                        );
+                      })()
+                    )}
+                  </div>
+                )}
               </div>
               
               <div>
@@ -151,10 +238,9 @@ export default function Doctors() {
                   className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] p-2.5 text-xs outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 text-slate-700 dark:text-[#CBD5E1] transition"
                 >
                   <option value="">All States</option>
-                  <option value="Gujarat">Gujarat</option>
-                  <option value="Maharashtra">Maharashtra</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Karnataka">Karnataka</option>
+                  {ACTIVE_STATES.map((stateName) => (
+                    <option key={stateName} value={stateName}>{stateName}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -165,24 +251,34 @@ export default function Doctors() {
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#94A3B8] mb-3">Interactive States</h3>
             
             <div className="relative flex items-center justify-center bg-blue-50/10 dark:bg-blue-950/5 rounded-2xl border border-slate-50 dark:border-[#334155]/30 p-4 h-64 shadow-inner">
-              <svg viewBox="0 0 120 200" className="w-full h-full max-h-56 filter drop-shadow-sm">
-                {STATE_MAP_DATA.map((state) => (
-                  <motion.path
-                    key={state.id}
-                    d={state.path}
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    className={`cursor-pointer transition-colors text-white dark:text-[#1E293B] ${selectedState === state.id ? "fill-blue-500" : "fill-slate-200 dark:fill-[#334155]"}`}
-                    whileHover={{ fill: "#93C5FD", scale: 1.03 }}
-                    onClick={() => {
-                      setSelectedState(state.id);
-                      setCity("");
-                    }}
-                  />
-                ))}
+              <svg viewBox="0 0 612 696" className="w-full h-full max-h-56 filter drop-shadow-sm">
+                {STATE_MAP_DATA.map((state) => {
+                  const isActive = ACTIVE_STATES.includes(state.id);
+                  const isSelected = selectedState === state.id;
+                  return (
+                    <motion.path
+                      key={state.id}
+                      d={state.path}
+                      stroke="currentColor"
+                      strokeWidth="0.8"
+                      className={`transition-colors duration-200 ${
+                        isSelected 
+                          ? "fill-blue-500 text-blue-600 dark:fill-blue-600 dark:text-blue-500" 
+                          : isActive 
+                            ? "fill-blue-50/80 dark:fill-blue-950/20 text-blue-300/80 dark:text-blue-700/60 cursor-pointer hover:fill-blue-200/80 dark:hover:fill-blue-900/50" 
+                            : "fill-slate-100/60 dark:fill-slate-800/40 text-slate-200 dark:text-slate-700/30 cursor-pointer hover:fill-slate-200/90 dark:hover:fill-slate-700/60"
+                      }`}
+                      whileHover={{ scale: 1.01 }}
+                      onClick={() => {
+                        setSelectedState(isSelected ? "" : state.id);
+                        setCity("");
+                      }}
+                    />
+                  );
+                })}
               </svg>
               <div className="absolute bottom-2 inset-x-2 text-[9px] text-slate-400 dark:text-[#94A3B8] leading-normal text-center border-t border-slate-50 dark:border-[#334155]/30 pt-2 bg-white/70 dark:bg-[#1E293B]/70 backdrop-blur-2xs rounded-lg">
-                Click map state to filter. Active states: <b>GJ, MH, DL, KA</b>.
+                Click state to filter. Highlighted states have active clinics.
               </div>
             </div>
           </div>

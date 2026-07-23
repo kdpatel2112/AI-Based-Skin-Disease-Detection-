@@ -24,7 +24,7 @@ export default function Register() {
       await register(fullName, email, password, i18n.language || "en");
       navigate("/upload");
     } catch {
-      setError("Could not create account. The email may already be registered.");
+      setError(t("auth.register_error"));
     } finally {
       setSubmitting(false);
     }
@@ -45,28 +45,28 @@ export default function Register() {
         <div className="flex items-center gap-2">
           <UserPlus className="text-blue-500" size={24} />
           <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-[#F8FAFC] flex items-center gap-1.5">
-            Register <Sparkles size={16} className="text-blue-500 animate-pulse" />
+            {t("auth.register_title")} <Sparkles size={16} className="text-blue-500 animate-pulse" />
           </h1>
         </div>
-        <p className="text-xs text-slate-400 dark:text-[#94A3B8] mt-1">Join us to manage and analyze your skin health.</p>
+        <p className="text-xs text-slate-400 dark:text-[#94A3B8] mt-1">{t("auth.register_subtitle")}</p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4 text-xs">
           <div>
-            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">Full Name</label>
+            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">{t("auth.full_name")}</label>
             <div className="relative flex items-center">
               <User className="absolute left-3.5 text-slate-400 dark:text-[#94A3B8]" size={16} />
               <input
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="John Doe"
+                placeholder={t("auth.full_name_placeholder")}
                 className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] p-3.5 pl-11 outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 focus:bg-white dark:focus:bg-[#0B1220] transition-all duration-300 text-slate-800 dark:text-[#CBD5E1]"
               />
             </div>
           </div>
           
           <div>
-            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">Email Address</label>
+            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">{t("auth.email")}</label>
             <div className="relative flex items-center">
               <Mail className="absolute left-3.5 text-slate-400 dark:text-[#94A3B8]" size={16} />
               <input
@@ -74,14 +74,14 @@ export default function Register() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={t("auth.email_placeholder")}
                 className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] p-3.5 pl-11 outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 focus:bg-white dark:focus:bg-[#0B1220] transition-all duration-300 text-slate-800 dark:text-[#CBD5E1]"
               />
             </div>
           </div>
           
           <div>
-            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">Password</label>
+            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">{t("auth.password")}</label>
             <div className="relative flex items-center">
               <Lock className="absolute left-3.5 text-slate-400 dark:text-[#94A3B8]" size={16} />
               <input
@@ -90,7 +90,7 @@ export default function Register() {
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Minimum 8 characters"
+                placeholder={t("auth.password_placeholder")}
                 className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] p-3.5 pl-11 pr-11 outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 focus:bg-white dark:focus:bg-[#0B1220] transition-all duration-300 text-slate-800 dark:text-[#CBD5E1]"
               />
               <button
@@ -115,18 +115,18 @@ export default function Register() {
             {submitting ? (
               <>
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                <span>Creating Account...</span>
+                <span>{t("auth.creating_account")}</span>
               </>
             ) : (
-              <span>Create Account</span>
+              <span>{t("auth.register_button")}</span>
             )}
           </motion.button>
         </form>
 
         <div className="mt-6 pt-4 border-t border-slate-100 dark:border-[#334155]/30 text-center text-xs text-slate-500 dark:text-[#94A3B8]">
-          Already have an account?{" "}
+          {t("auth.have_account")}{" "}
           <Link to="/login" className="font-semibold text-blue-500 hover:underline">
-            Log in here
+            {t("auth.login_here")}
           </Link>
         </div>
       </motion.div>

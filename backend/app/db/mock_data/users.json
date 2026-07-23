@@ -3,7 +3,7 @@
     "full_name": "Krishna Patel",
     "email": "krishna@example.com",
     "hashed_password": "$2b$12$5cbey7OfOOVabFzn9w9TaOINoVLtYCB3mWk5iCkqhALr1mtGLk9nO",
-    "role": "user",
+    "role": "admin",
     "preferred_language": "en",
     "is_verified": false,
     "created_at": "2026-06-26T09:38:10.163004+00:00",

@@ -284,6 +284,61 @@ def _generate_confidence_chart(predictions: list[dict]) -> Image:
     buf.seek(0)
     return Image(buf, width=130 * mm, height=36 * mm)
 
+# ── Unicode Font Registration ─────────────────────────────────────────────────
+
+_FONTS_REGISTERED: dict = {}  # { font_name: True }
+
+FONT_CONFIG = {
+    "hi": {
+        "regular": "NotoSansDevanagari-Regular",
+        "bold": "NotoSansDevanagari-Regular",  # Use same if no separate bold TTF
+        "italic": "NotoSansDevanagari-Regular",
+        "ttf_regular": "NotoSansDevanagari-Regular.ttf",
+    },
+    "gu": {
+        "regular": "NotoSansGujarati-Regular",
+        "bold": "NotoSansGujarati-Regular",
+        "italic": "NotoSansGujarati-Regular",
+        "ttf_regular": "NotoSansGujarati-Regular.ttf",
+    },
+}
+
+FONTS_DIR = Path(__file__).resolve().parent.parent.parent / "static" / "fonts"
+
+
+def _register_noto_font(lang: str) -> dict:
+    """
+    Register Noto Unicode font for the given language.
+    Returns a dict with 'regular', 'bold', 'italic' font names to use in styles.
+    Falls back to Helvetica if fonts are not found.
+    """
+    if lang not in FONT_CONFIG:
+        return {"regular": "Helvetica", "bold": "Helvetica-Bold", "italic": "Helvetica-Oblique"}
+
+    cfg = FONT_CONFIG[lang]
+    reg_name = cfg["regular"]
+
+    if reg_name in _FONTS_REGISTERED:
+        return {"regular": reg_name, "bold": cfg["bold"], "italic": cfg["italic"]}
+
+    ttf_path = FONTS_DIR / cfg["ttf_regular"]
+    if not ttf_path.exists():
+        print(f"[PDF] Noto font not found at {ttf_path}. Falling back to Helvetica.")
+        print(f"[PDF] Download from https://fonts.google.com/noto and place in backend/static/fonts/")
+        return {"regular": "Helvetica", "bold": "Helvetica-Bold", "italic": "Helvetica-Oblique"}
+
+    try:
+        from reportlab.pdfbase import pdfmetrics
+        from reportlab.pdfbase.ttfonts import TTFont
+        pdfmetrics.registerFont(TTFont(reg_name, str(ttf_path)))
+        _FONTS_REGISTERED[reg_name] = True
+        print(f"[PDF] Registered Unicode font: {reg_name}")
+        return {"regular": reg_name, "bold": reg_name, "italic": reg_name}
+    except Exception as e:
+        print(f"[PDF] Failed to register Noto font: {e}. Using Helvetica.")
+        return {"regular": "Helvetica", "bold": "Helvetica-Bold", "italic": "Helvetica-Oblique"}
+
+
 
 def generate_pdf_report(
     patient_name: str,
@@ -295,12 +350,55 @@ def generate_pdf_report(
     age: int = 21,
     gender: str = "Male",
     phone: str = "Optional",
-    email: str = "Optional"
+    email: str = "Optional",
+    target_lang: str = "en"
 ) -> bytes:
     """
     Builds a beautifully styled clinic-level 2-page PDF report.
+    Supports multilingual output for English (en), Hindi (hi), and Gujarati (gu).
+    Uses Unicode Noto fonts for Hindi/Gujarati script rendering.
     """
+    import copy
+    prediction = copy.deepcopy(prediction)
+    recommendation = copy.deepcopy(recommendation)
+
+    # ── Register Unicode font for non-English scripts ─────────────────────────
+    font = _register_noto_font(target_lang)
+    font_regular = font["regular"]
+    font_bold = font["bold"]
+    font_italic = font["italic"]
+
+    # -- Multilingual translation of dynamic content --
+    if target_lang != "en":
+        try:
+            from app.services.nlp_service import translate_text
+
+            def _t(text: str) -> str:
+                return translate_text(text, target_lang=target_lang, source_lang="en") if text else text
+
+            def _t_list(lst: list) -> list:
+                return [_t(item) for item in lst] if lst else lst
+
+            # Translate disease title
+            if prediction.get("primary_disease_title"):
+                prediction["primary_disease_title"] = _t(prediction["primary_disease_title"])
+
+            # Translate recommendation list fields
+            for key in ["skin_care", "lifestyle", "diet_recommended", "diet_avoid",
+                         "emergency_warning_signs", "educational_medications"]:
+                if recommendation.get(key) and isinstance(recommendation[key], list):
+                    recommendation[key] = _t_list(recommendation[key])
+
+            # Translate string fields
+            for key in ["severity_guidance", "first_aid", "emergency_warning"]:
+                if recommendation.get(key):
+                    recommendation[key] = _t(recommendation[key])
+
+        except Exception as e:
+            print(f"PDF translation error (non-fatal, reverting to EN): {e}")
+
     buffer = io.BytesIO()
+
     
     # Document dimensions (A4 = 595.27 x 841.89 points)
     # Margins: 45 points (~16 mm)
@@ -322,11 +420,11 @@ def generate_pdf_report(
     border_gray = colors.HexColor("#E2E8F0")
     bg_light = colors.HexColor("#F0FDFA")
     
-    # Custom Paragraph Styles
+    # Custom Paragraph Styles (uses Unicode font based on target_lang)
     title_style = ParagraphStyle(
         "DocTitle",
         parent=styles["Normal"],
-        fontName="Helvetica-Bold",
+        fontName=font_bold,
         fontSize=15,
         textColor=primary_teal,
         spaceAfter=2,
@@ -334,7 +432,7 @@ def generate_pdf_report(
     subtitle_style = ParagraphStyle(
         "DocSubtitle",
         parent=styles["Normal"],
-        fontName="Helvetica",
+        fontName=font_regular,
         fontSize=8.5,
         textColor=accent_green,
         spaceAfter=10,
@@ -342,7 +440,7 @@ def generate_pdf_report(
     section_h_style = ParagraphStyle(
         "SecH",
         parent=styles["Normal"],
-        fontName="Helvetica-Bold",
+        fontName=font_bold,
         fontSize=9.5,
         textColor=primary_teal,
         spaceBefore=6,
@@ -351,15 +449,15 @@ def generate_pdf_report(
     body_style = ParagraphStyle(
         "Body",
         parent=styles["Normal"],
-        fontName="Helvetica",
+        fontName=font_regular,
         fontSize=8,
-        leading=9.5,
+        leading=11,  # slightly more leading for non-Latin scripts
         textColor=text_dark,
     )
     body_bold = ParagraphStyle(
         "BodyB",
         parent=body_style,
-        fontName="Helvetica-Bold",
+        fontName=font_bold,
     )
     right_body_style = ParagraphStyle(
         "RightBody",
@@ -371,9 +469,9 @@ def generate_pdf_report(
     disclaimer_style = ParagraphStyle(
         "ReportDisclaimer",
         parent=styles["Normal"],
-        fontName="Helvetica-Oblique",
+        fontName=font_italic,
         fontSize=6.5,
-        leading=8,
+        leading=9,
         textColor=colors.HexColor("#64748B"),
     )
     

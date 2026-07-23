@@ -10,7 +10,18 @@
     "longitude": 72.6034,
     "emergency": true,
     "phone": "+91-79-22683721",
-    "_id": "6a3e47a7647c4be409c77bab"
+    "dermatologists": [
+      {
+        "name": "Dr. Amita H. Sutariya",
+        "designation": "Professor & Head of Department",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Umesh Karia",
+        "designation": "Unit Head & Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
   },
   {
     "id": "hos_002",
@@ -23,7 +34,18 @@
     "longitude": 72.6019,
     "emergency": true,
     "phone": "+91-79-66701800",
-    "_id": "6a3e47a7647c4be409c77bac"
+    "dermatologists": [
+      {
+        "name": "Dr. Anshul Warman",
+        "designation": "Senior Consultant",
+        "qualification": "MBBS, MD, DNB"
+      },
+      {
+        "name": "Dr. Pooja Solanki Vyas",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MBBS, MD"
+      }
+    ]
   },
   {
     "id": "hos_003",
@@ -36,7 +58,28 @@
     "longitude": 72.8295,
     "emergency": true,
     "phone": "+91-22-26751000",
-    "_id": "6a3e47a7647c4be409c77bad"
+    "dermatologists": [
+      {
+        "name": "Dr. Shrichand G. Parasramani",
+        "designation": "Senior Consultant",
+        "qualification": "MD, DDV, FAAD"
+      },
+      {
+        "name": "Dr. Dipali Malvankar",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD, DNB, MRCP"
+      },
+      {
+        "name": "Dr. Nimesh D. Mehta",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD, DVD"
+      },
+      {
+        "name": "Dr. Jisha Pillai",
+        "designation": "Consultant Dermatosurgeon",
+        "qualification": "MBBS, MD"
+      }
+    ]
   },
   {
     "id": "hos_004",
@@ -49,7 +92,28 @@
     "longitude": 77.21,
     "emergency": true,
     "phone": "+91-11-26588500",
-    "_id": "6a3e47a7647c4be409c77bae"
+    "dermatologists": [
+      {
+        "name": "Dr. Sujay Khandpur",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. G. Sethuraman",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Somesh Gupta",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Kanika Sahni",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
   },
   {
     "id": "hos_005",
@@ -62,6 +126,1147 @@
     "longitude": 77.6481,
     "emergency": true,
     "phone": "+91-80-25024444",
-    "_id": "6a3e47a7647c4be409c77baf"
+    "dermatologists": [
+      {
+        "name": "Dr. Mukesh Ramnane",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MBBS, MD"
+      },
+      {
+        "name": "Dr. Sabitha S.",
+        "designation": "Senior Consultant",
+        "qualification": "MBBS, MD"
+      }
+    ]
+  },
+  {
+    "id": "hos_006",
+    "name": "SVP Hospital",
+    "type": "Government",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Ellisbridge, Ahmedabad",
+    "latitude": 23.0225,
+    "longitude": 72.5714,
+    "emergency": true,
+    "phone": "+91-79-26577621",
+    "dermatologists": [
+      {
+        "name": "Dr. Rita Vora",
+        "designation": "Head of Department",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Hardik Patel",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_007",
+    "name": "KD Hospital",
+    "type": "Private",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Vaishnodevi Circle, SG Highway, Ahmedabad",
+    "latitude": 23.1283,
+    "longitude": 72.5442,
+    "emergency": true,
+    "phone": "+91-79-66770000",
+    "dermatologists": [
+      {
+        "name": "Dr. Darshil Shah",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Nita Sharma",
+        "designation": "Senior Consultant",
+        "qualification": "MD, DVD"
+      }
+    ]
+  },
+  {
+    "id": "hos_008",
+    "name": "Sterling Hospital Memnagar",
+    "type": "Private",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Memnagar, Ahmedabad",
+    "latitude": 23.0494,
+    "longitude": 72.5323,
+    "emergency": true,
+    "phone": "+91-79-40011111",
+    "dermatologists": [
+      {
+        "name": "Dr. Kamlesh Patel",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD, DVD"
+      }
+    ]
+  },
+  {
+    "id": "hos_009",
+    "name": "SAL Hospital",
+    "type": "Private",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Drive In Road, Thaltej, Ahmedabad",
+    "latitude": 23.0489,
+    "longitude": 72.5273,
+    "emergency": true,
+    "phone": "+91-79-66820000",
+    "dermatologists": [
+      {
+        "name": "Dr. Tejal Patel",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_010",
+    "name": "Avron Hospital",
+    "type": "Private",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "42, Shanti Sadan Society, Ellisbridge, Ahmedabad",
+    "latitude": 23.0251,
+    "longitude": 72.5645,
+    "emergency": true,
+    "phone": "+91-9081830011",
+    "dermatologists": [
+      {
+        "name": "Dr. Kanan B. Shah",
+        "designation": "Dermatology Specialist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_011",
+    "name": "New Civil Hospital Surat",
+    "type": "Government",
+    "city": "Surat",
+    "state": "Gujarat",
+    "address": "Majura Gate, Surat",
+    "latitude": 21.1764,
+    "longitude": 72.8197,
+    "emergency": true,
+    "phone": "+91-261-2244456",
+    "dermatologists": [
+      {
+        "name": "Dr. B. S. Vaishnav",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Sheetal Solanki",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_012",
+    "name": "Kiran Multi Super Specialty Hospital",
+    "type": "Private",
+    "city": "Surat",
+    "state": "Gujarat",
+    "address": "Vasta Devdi Road, Katargam, Surat",
+    "latitude": 21.222,
+    "longitude": 72.8315,
+    "emergency": true,
+    "phone": "+91-261-7111111",
+    "dermatologists": [
+      {
+        "name": "Dr. Chirag Desai",
+        "designation": "Senior Consultant",
+        "qualification": "MD, DNB"
+      },
+      {
+        "name": "Dr. Forum Patel",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_013",
+    "name": "Shalby Hospital Surat",
+    "type": "Private",
+    "city": "Surat",
+    "state": "Gujarat",
+    "address": "Rander Road, Adajan, Surat",
+    "latitude": 21.1963,
+    "longitude": 72.7932,
+    "emergency": true,
+    "phone": "+91-261-2700000",
+    "dermatologists": [
+      {
+        "name": "Dr. Jignesh Shah",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_014",
+    "name": "SSG Hospital Vadodara",
+    "type": "Government",
+    "city": "Vadodara",
+    "state": "Gujarat",
+    "address": "Jail Road, Sayajiganj, Vadodara",
+    "latitude": 22.3088,
+    "longitude": 73.1904,
+    "emergency": true,
+    "phone": "+91-265-2424848",
+    "dermatologists": [
+      {
+        "name": "Dr. Pragya Nair",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Rashmi Mahajan",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_015",
+    "name": "Bhakti Vedanta Hospital (Sterling Vadodara)",
+    "type": "Private",
+    "city": "Vadodara",
+    "state": "Gujarat",
+    "address": "Gotri Main Road, Vadodara",
+    "latitude": 22.316,
+    "longitude": 73.1492,
+    "emergency": true,
+    "phone": "+91-265-3980000",
+    "dermatologists": [
+      {
+        "name": "Dr. Hiren Soni",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD, DVD"
+      }
+    ]
+  },
+  {
+    "id": "hos_016",
+    "name": "PDU Medical College & Hospital",
+    "type": "Government",
+    "city": "Rajkot",
+    "state": "Gujarat",
+    "address": "Jamnagar Road, Rajkot",
+    "latitude": 22.302,
+    "longitude": 70.7981,
+    "emergency": true,
+    "phone": "+91-281-2444222",
+    "dermatologists": [
+      {
+        "name": "Dr. Neela Bhuptani",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Jayesh Sanathara",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_017",
+    "name": "Sterling Hospital Rajkot",
+    "type": "Private",
+    "city": "Rajkot",
+    "state": "Gujarat",
+    "address": "150 Feet Ring Road, Raiya Circle, Rajkot",
+    "latitude": 22.2965,
+    "longitude": 70.7712,
+    "emergency": true,
+    "phone": "+91-281-3944111",
+    "dermatologists": [
+      {
+        "name": "Dr. Bhavesh Devani",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD, DVD"
+      }
+    ]
+  },
+  {
+    "id": "hos_018",
+    "name": "GG Hospital Jamnagar",
+    "type": "Government",
+    "city": "Jamnagar",
+    "state": "Gujarat",
+    "address": "Pandit Nehru Marg, Jamnagar",
+    "latitude": 22.4678,
+    "longitude": 70.0655,
+    "emergency": true,
+    "phone": "+91-288-2550208",
+    "dermatologists": [
+      {
+        "name": "Dr. Nilesh Kanani",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_019",
+    "name": "Sir T. General Hospital Bhavnagar",
+    "type": "Government",
+    "city": "Bhavnagar",
+    "state": "Gujarat",
+    "address": "Jail Road, Bhavnagar",
+    "latitude": 21.7645,
+    "longitude": 72.1519,
+    "emergency": true,
+    "phone": "+91-278-2426120",
+    "dermatologists": [
+      {
+        "name": "Dr. Devendra Gohil",
+        "designation": "Head of Department",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_020",
+    "name": "GMERS Medical College & Hospital Gandhinagar",
+    "type": "Government",
+    "city": "Gandhinagar",
+    "state": "Gujarat",
+    "address": "Sector 12, Gandhinagar",
+    "latitude": 23.22,
+    "longitude": 72.65,
+    "emergency": true,
+    "phone": "+91-79-23240296",
+    "dermatologists": [
+      {
+        "name": "Dr. Hetal Patel",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_021",
+    "name": "KMC Hospital Mangaluru",
+    "type": "Private",
+    "city": "Mangaluru",
+    "state": "Karnataka",
+    "address": "Ambedkar Circle, Mangaluru",
+    "latitude": 12.8702,
+    "longitude": 74.843,
+    "emergency": true,
+    "phone": "+91-824-2444590",
+    "dermatologists": [
+      {
+        "name": "Dr. Pramod Kumar",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_022",
+    "name": "St. John's Medical College Hospital",
+    "type": "Private",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "address": "Sarjapur Road, Bengaluru",
+    "latitude": 12.9279,
+    "longitude": 77.6206,
+    "emergency": true,
+    "phone": "+91-80-22065000",
+    "dermatologists": [
+      {
+        "name": "Dr. M. Mary Augustine",
+        "designation": "Head of Department",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Vijaya B.",
+        "designation": "Senior Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_023",
+    "name": "Christian Medical College (CMC) Vellore",
+    "type": "Private",
+    "city": "Vellore",
+    "state": "Tamil Nadu",
+    "address": "Ida Scudder Road, Vellore",
+    "latitude": 12.9252,
+    "longitude": 79.1353,
+    "emergency": true,
+    "phone": "+91-416-2281000",
+    "dermatologists": [
+      {
+        "name": "Dr. Susanne Pulimood",
+        "designation": "Professor & Head",
+        "qualification": "MD, FRCP"
+      },
+      {
+        "name": "Dr. Renu George",
+        "designation": "Senior Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_024",
+    "name": "Apollo Hospitals Greams Road",
+    "type": "Private",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "Greams Lane, Thousand Lights, Chennai",
+    "latitude": 13.06,
+    "longitude": 80.251,
+    "emergency": true,
+    "phone": "+91-44-28290200",
+    "dermatologists": [
+      {
+        "name": "Dr. Maya Vedamurthy",
+        "designation": "Senior Consultant",
+        "qualification": "MD, FRCP"
+      },
+      {
+        "name": "Dr. S. R. Raghunathan",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_025",
+    "name": "PGIMER Chandigarh",
+    "type": "Government",
+    "city": "Chandigarh",
+    "state": "Chandigarh",
+    "address": "Sector 12, Chandigarh",
+    "latitude": 30.7648,
+    "longitude": 76.7761,
+    "emergency": true,
+    "phone": "+91-172-2747585",
+    "dermatologists": [
+      {
+        "name": "Dr. Sanjeev Handa",
+        "designation": "Professor & Head",
+        "qualification": "MD, FAMS"
+      },
+      {
+        "name": "Dr. Dipankar De",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_026",
+    "name": "KEM Hospital Mumbai",
+    "type": "Government",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "Parel, Mumbai",
+    "latitude": 19.0022,
+    "longitude": 72.8422,
+    "emergency": true,
+    "phone": "+91-22-24107000",
+    "dermatologists": [
+      {
+        "name": "Dr. Vidya Kharkar",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Sunanda Mahajan",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_027",
+    "name": "Tata Memorial Hospital",
+    "type": "Government",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "Dr. E Borges Road, Parel, Mumbai",
+    "latitude": 19.0041,
+    "longitude": 72.8433,
+    "emergency": true,
+    "phone": "+91-22-24177000",
+    "dermatologists": [
+      {
+        "name": "Dr. Rajiv Sarin",
+        "designation": "Dermato-Oncology Lead",
+        "qualification": "MD, FRCR"
+      }
+    ]
+  },
+  {
+    "id": "hos_028",
+    "name": "Kokilaben Dhirubhai Ambani Hospital",
+    "type": "Private",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "Rao Saheb Achutrao Patwardhan Marg, Andheri West, Mumbai",
+    "latitude": 19.1311,
+    "longitude": 72.8252,
+    "emergency": true,
+    "phone": "+91-22-42696969",
+    "dermatologists": [
+      {
+        "name": "Dr. Swapna Athavale",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_029",
+    "name": "Fortis Escorts Heart Institute & Multi-Specialty",
+    "type": "Private",
+    "city": "Delhi",
+    "state": "Delhi",
+    "address": "Okhla Road, New Delhi",
+    "latitude": 28.56,
+    "longitude": 77.27,
+    "emergency": true,
+    "phone": "+91-11-47135000",
+    "dermatologists": [
+      {
+        "name": "Dr. Ruchika Macchar",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_030",
+    "name": "Max Super Speciality Hospital Saket",
+    "type": "Private",
+    "city": "Delhi",
+    "state": "Delhi",
+    "address": "Press Enclave Marg, Saket, New Delhi",
+    "latitude": 28.528,
+    "longitude": 77.212,
+    "emergency": true,
+    "phone": "+91-11-26515050",
+    "dermatologists": [
+      {
+        "name": "Dr. Sunil Sanghi",
+        "designation": "Director Dermatology",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Nivedita Dadu",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_031",
+    "name": "Medanta - The Medicity",
+    "type": "Private",
+    "city": "Gurugram",
+    "state": "Haryana",
+    "address": "CH Baktawar Singh Road, Sector 38, Gurugram",
+    "latitude": 28.4382,
+    "longitude": 77.0425,
+    "emergency": true,
+    "phone": "+91-124-4141414",
+    "dermatologists": [
+      {
+        "name": "Dr. Ramanjit Singh",
+        "designation": "Director Dermatology",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_032",
+    "name": "Artemis Hospitals",
+    "type": "Private",
+    "city": "Gurugram",
+    "state": "Haryana",
+    "address": "Sector 51, Gurugram",
+    "latitude": 28.428,
+    "longitude": 77.078,
+    "emergency": true,
+    "phone": "+91-124-4511111",
+    "dermatologists": [
+      {
+        "name": "Dr. Monica Bambroo",
+        "designation": "Head - Dermatology & Cosmetology",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_033",
+    "name": "Yashoda Hospitals Secunderabad",
+    "type": "Private",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "address": "Alexander Road, Secunderabad",
+    "latitude": 17.4399,
+    "longitude": 78.4983,
+    "emergency": true,
+    "phone": "+91-40-45674567",
+    "dermatologists": [
+      {
+        "name": "Dr. A. M. V. R. Narendra",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_034",
+    "name": "Apollo Hospitals Jubilee Hills",
+    "type": "Private",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "address": "Road No 72, Film Nagar, Hyderabad",
+    "latitude": 17.4319,
+    "longitude": 78.4072,
+    "emergency": true,
+    "phone": "+91-40-23607777",
+    "dermatologists": [
+      {
+        "name": "Dr. D. V. S. Pratap",
+        "designation": "Senior Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_035",
+    "name": "AMRI Hospitals Dhakuria",
+    "type": "Private",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "address": "Block A, Scheme XLIX, Dhakuria, Kolkata",
+    "latitude": 22.5098,
+    "longitude": 88.368,
+    "emergency": true,
+    "phone": "+91-33-66800000",
+    "dermatologists": [
+      {
+        "name": "Dr. Sachin Varma",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_036",
+    "name": "IPGMER and SSKM Hospital",
+    "type": "Government",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "address": "244 AJC Bose Road, Kolkata",
+    "latitude": 22.5385,
+    "longitude": 88.3444,
+    "emergency": true,
+    "phone": "+91-33-22231589",
+    "dermatologists": [
+      {
+        "name": "Dr. Gobinda Chatterjee",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_037",
+    "name": "JIPMER Puducherry",
+    "type": "Government",
+    "city": "Puducherry",
+    "state": "Puducherry",
+    "address": "Jipmer Campus Road, Gorimedu, Puducherry",
+    "latitude": 11.9547,
+    "longitude": 79.8113,
+    "emergency": true,
+    "phone": "+91-413-2272380",
+    "dermatologists": [
+      {
+        "name": "Dr. Rashmi Kumari",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Laxmisha Chandrashekar",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_038",
+    "name": "Kasturba Hospital Manipal",
+    "type": "Private",
+    "city": "Manipal",
+    "state": "Karnataka",
+    "address": "Tiger Circle Road, Manipal",
+    "latitude": 13.3525,
+    "longitude": 74.7869,
+    "emergency": true,
+    "phone": "+91-820-2922241",
+    "dermatologists": [
+      {
+        "name": "Dr. Sathish Pai",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_039",
+    "name": "AIIMS Jodhpur",
+    "type": "Government",
+    "city": "Jodhpur",
+    "state": "Rajasthan",
+    "address": "Basni Industrial Area Phase-2, Jodhpur",
+    "latitude": 26.241,
+    "longitude": 73.003,
+    "emergency": true,
+    "phone": "+91-291-2740741",
+    "dermatologists": [
+      {
+        "name": "Dr. Puneet Bhargava",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_040",
+    "name": "SMS Medical College & Hospital",
+    "type": "Government",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "address": "JLN Marg, Jaipur",
+    "latitude": 26.898,
+    "longitude": 75.816,
+    "emergency": true,
+    "phone": "+91-141-2560291",
+    "dermatologists": [
+      {
+        "name": "Dr. Deepak Mathur",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_041",
+    "name": "Zydus Hospital Anand",
+    "type": "Private",
+    "city": "Anand",
+    "state": "Gujarat",
+    "address": "Anand-Sojitra Road, Anand",
+    "latitude": 22.556,
+    "longitude": 72.951,
+    "emergency": true,
+    "phone": "+91-2692-228000",
+    "dermatologists": [
+      {
+        "name": "Dr. Nishant Patel",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_042",
+    "name": "Shree Krishna Hospital & Pramukhswami Medical College",
+    "type": "Trust",
+    "city": "Karamsad",
+    "state": "Gujarat",
+    "address": "Gokal Nagar, Karamsad, Anand",
+    "latitude": 22.5441,
+    "longitude": 72.8986,
+    "emergency": true,
+    "phone": "+91-2692-228400",
+    "dermatologists": [
+      {
+        "name": "Dr. Rita Vora",
+        "designation": "Professor & Head",
+        "qualification": "MD, DVD"
+      },
+      {
+        "name": "Dr. Pragya Nair",
+        "designation": "Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_043",
+    "name": "GMERS Medical College & Hospital Himmatnagar",
+    "type": "Government",
+    "city": "Himmatnagar",
+    "state": "Gujarat",
+    "address": "Hapa Road, Himmatnagar, Sabarkantha",
+    "latitude": 23.5979,
+    "longitude": 72.9698,
+    "emergency": true,
+    "phone": "+91-2772-229100",
+    "dermatologists": [
+      {
+        "name": "Dr. Chirag Solanki",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_044",
+    "name": "GMERS Medical College & Hospital Dharpur",
+    "type": "Government",
+    "city": "Patan",
+    "state": "Gujarat",
+    "address": "Dharpur, Patan",
+    "latitude": 23.8315,
+    "longitude": 72.1248,
+    "emergency": true,
+    "phone": "+91-2766-291300",
+    "dermatologists": [
+      {
+        "name": "Dr. Jayesh Chaudhari",
+        "designation": "Assistant Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_045",
+    "name": "General Hospital Mehsana (Civil)",
+    "type": "Government",
+    "city": "Mehsana",
+    "state": "Gujarat",
+    "address": "Rajmahal Road, Mehsana",
+    "latitude": 23.588,
+    "longitude": 72.3693,
+    "emergency": true,
+    "phone": "+91-2762-252101",
+    "dermatologists": [
+      {
+        "name": "Dr. Pankaj Prajapati",
+        "designation": "Senior Medical Officer (Skin)",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_046",
+    "name": "GMERS Medical College & Hospital Junagadh",
+    "type": "Government",
+    "city": "Junagadh",
+    "state": "Gujarat",
+    "address": "Majevadi Gate, Junagadh",
+    "latitude": 21.5222,
+    "longitude": 70.4579,
+    "emergency": true,
+    "phone": "+91-285-2650420",
+    "dermatologists": [
+      {
+        "name": "Dr. Bhavesh Swakar",
+        "designation": "Head of Department",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_047",
+    "name": "GMERS Medical College & Hospital Vadnagar",
+    "type": "Government",
+    "city": "Vadnagar",
+    "state": "Gujarat",
+    "address": "Sipor Road, Vadnagar, Mehsana",
+    "latitude": 23.785,
+    "longitude": 72.641,
+    "emergency": true,
+    "phone": "+91-2761-222000",
+    "dermatologists": [
+      {
+        "name": "Dr. Sneha Patel",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_048",
+    "name": "Kasturba Hospital Valsad",
+    "type": "Government/Trust",
+    "city": "Valsad",
+    "state": "Gujarat",
+    "address": "Kasturba Hospital Road, Valsad",
+    "latitude": 20.61,
+    "longitude": 72.93,
+    "emergency": true,
+    "phone": "+91-2632-254201",
+    "dermatologists": [
+      {
+        "name": "Dr. Mehul Desai",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD, DVD"
+      }
+    ]
+  },
+  {
+    "id": "hos_049",
+    "name": "GMERS Medical College Navsari",
+    "type": "Government",
+    "city": "Navsari",
+    "state": "Gujarat",
+    "address": "Grid Road, Navsari",
+    "latitude": 20.9467,
+    "longitude": 72.952,
+    "emergency": true,
+    "phone": "+91-2637-280200",
+    "dermatologists": [
+      {
+        "name": "Dr. Hardik Shah",
+        "designation": "Assistant Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_050",
+    "name": "Apex Hospital Surat",
+    "type": "Private",
+    "city": "Surat",
+    "state": "Gujarat",
+    "address": "Ring Road, Surat",
+    "latitude": 21.189,
+    "longitude": 72.825,
+    "emergency": true,
+    "phone": "+91-261-2345678",
+    "dermatologists": [
+      {
+        "name": "Dr. Pratik Parikh",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_051",
+    "name": "Ruby Hall Clinic",
+    "type": "Private",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "address": "Sassoon Road, Sangamvadi, Pune",
+    "latitude": 18.5323,
+    "longitude": 73.8778,
+    "emergency": true,
+    "phone": "+91-20-66455100",
+    "dermatologists": [
+      {
+        "name": "Dr. Dhanashree Bhide",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Nitin Jain",
+        "designation": "Consultant Dermatosurgeon",
+        "qualification": "MD, DNB"
+      }
+    ]
+  },
+  {
+    "id": "hos_052",
+    "name": "Deenanath Mangeshkar Hospital",
+    "type": "Trust",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "address": "Erandwane, Pune",
+    "latitude": 18.5042,
+    "longitude": 73.8327,
+    "emergency": true,
+    "phone": "+91-20-40151000",
+    "dermatologists": [
+      {
+        "name": "Dr. Anil Patki",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_053",
+    "name": "Choithram Hospital and Research Centre",
+    "type": "Trust",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "address": "Manik Bagh Road, Indore",
+    "latitude": 22.689,
+    "longitude": 75.836,
+    "emergency": true,
+    "phone": "+91-731-2472631",
+    "dermatologists": [
+      {
+        "name": "Dr. Sanjay Khare",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_054",
+    "name": "Bansal Hospital",
+    "type": "Private",
+    "city": "Bhopal",
+    "state": "Madhya Pradesh",
+    "address": "Shahpura, Bhopal",
+    "latitude": 23.197,
+    "longitude": 77.432,
+    "emergency": true,
+    "phone": "+91-755-4086000",
+    "dermatologists": [
+      {
+        "name": "Dr. Abhay Rai",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_055",
+    "name": "Sanjay Gandhi Postgraduate Institute of Medical Sciences (SGPGI)",
+    "type": "Government",
+    "city": "Lucknow",
+    "state": "Uttar Pradesh",
+    "address": "Raebareli Road, Lucknow",
+    "latitude": 26.7485,
+    "longitude": 80.9388,
+    "emergency": true,
+    "phone": "+91-522-2668700",
+    "dermatologists": [
+      {
+        "name": "Dr. Swastika Suvirya",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_056",
+    "name": "Amrita Hospital",
+    "type": "Private",
+    "city": "Kochi",
+    "state": "Kerala",
+    "address": "Ponekkara, Edappally, Kochi",
+    "latitude": 10.0326,
+    "longitude": 76.2996,
+    "emergency": true,
+    "phone": "+91-484-2851234",
+    "dermatologists": [
+      {
+        "name": "Dr. Vinitha V. Nair",
+        "designation": "Professor & Head",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Soumya Jagadeesan",
+        "designation": "Associate Professor",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_057",
+    "name": "KIMSHealth",
+    "type": "Private",
+    "city": "Thiruvananthapuram",
+    "state": "Kerala",
+    "address": "Anayara, Thiruvananthapuram",
+    "latitude": 8.5135,
+    "longitude": 76.9158,
+    "emergency": true,
+    "phone": "+91-471-2941000",
+    "dermatologists": [
+      {
+        "name": "Dr. B. S. Chandrashekar",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_058",
+    "name": "Narayana Health City",
+    "type": "Private",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "address": "Bommasandra Industrial Area, Hosur Road, Bengaluru",
+    "latitude": 12.8126,
+    "longitude": 77.6914,
+    "emergency": true,
+    "phone": "+91-80-71222222",
+    "dermatologists": [
+      {
+        "name": "Dr. Shuba Dharmana",
+        "designation": "Senior Consultant",
+        "qualification": "MBBS, DPD (UK)"
+      }
+    ]
+  },
+  {
+    "id": "hos_059",
+    "name": "Sunshine Hospitals",
+    "type": "Private",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "address": "PG Road, Paradise Circle, Secunderabad",
+    "latitude": 17.4432,
+    "longitude": 78.4843,
+    "emergency": true,
+    "phone": "+91-40-44550000",
+    "dermatologists": [
+      {
+        "name": "Dr. Y. Muralidhar Reddy",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      }
+    ]
+  },
+  {
+    "id": "hos_060",
+    "name": "Sir Ganga Ram Hospital",
+    "type": "Private",
+    "city": "Delhi",
+    "state": "Delhi",
+    "address": "Rajinder Nagar, New Delhi",
+    "latitude": 28.6389,
+    "longitude": 77.1894,
+    "emergency": true,
+    "phone": "+91-11-25750000",
+    "dermatologists": [
+      {
+        "name": "Dr. Rohit Batra",
+        "designation": "Senior Consultant",
+        "qualification": "MD Dermatology"
+      },
+      {
+        "name": "Dr. Rishi Parashar",
+        "designation": "Consultant Dermatologist",
+        "qualification": "MD Dermatology"
+      }
+    ]
   }
 ]

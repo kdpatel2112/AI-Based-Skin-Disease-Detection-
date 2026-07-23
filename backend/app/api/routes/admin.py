@@ -209,3 +209,65 @@ async def get_retraining_status(_admin: dict = Depends(require_admin)):
         "recent_logs": recent_logs,
         "log_url": f"{settings.backend_url}/static/retrain.log" if log_path.exists() else None
     }
+
+
+class TranslateContentRequest(BaseModel):
+    content: str
+    source_lang: str = "en"
+    target_langs: list[str] = ["hi", "gu"]
+
+
+@router.post("/translate-content")
+async def translate_content_admin(
+    payload: TranslateContentRequest,
+    _admin: dict = Depends(require_admin)
+):
+    """
+    Admin-only auto-translation pipeline.
+    Detects source language, translates content to each target language,
+    and returns a structured multilingual document.
+    Useful for translating new disease descriptions or content blocks.
+    """
+    if not payload.content.strip():
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Content cannot be empty.")
+
+    valid_langs = {"en", "hi", "gu"}
+    invalid = set(payload.target_langs) - valid_langs
+    if invalid:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST,
+            f"Invalid target languages: {invalid}. Supported: en, hi, gu"
+        )
+
+    from app.services import nlp_service
+
+    detected_source = nlp_service.detect_language(payload.content)
+    effective_source = payload.source_lang if payload.source_lang in valid_langs else detected_source
+
+    translations = {effective_source: payload.content}
+    errors = {}
+
+    for lang in payload.target_langs:
+        if lang == effective_source:
+            translations[lang] = payload.content
+            continue
+        try:
+            translated = nlp_service.translate_text(
+                payload.content,
+                target_lang=lang,
+                source_lang=effective_source
+            )
+            translations[lang] = translated
+        except Exception as e:
+            errors[lang] = str(e)
+            translations[lang] = None
+
+    return {
+        "source_content": payload.content,
+        "detected_source_lang": detected_source,
+        "effective_source_lang": effective_source,
+        "translations": translations,
+        "errors": errors if errors else None,
+        "translated_at": datetime.now(timezone.utc).isoformat()
+    }
+

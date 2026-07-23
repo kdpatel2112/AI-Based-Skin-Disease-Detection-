@@ -23,7 +23,7 @@ export default function Login() {
       await login(email, password);
       navigate("/upload");
     } catch {
-      setError("Incorrect email or password.");
+      setError(t("auth.login_error"));
     } finally {
       setSubmitting(false);
     }
@@ -44,14 +44,14 @@ export default function Login() {
         <div className="flex items-center gap-2">
           <LogIn className="text-blue-500" size={24} />
           <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-[#F8FAFC] flex items-center gap-1.5">
-            Log In <Sparkles size={16} className="text-blue-500 animate-pulse" />
+            {t("auth.login_title")} <Sparkles size={16} className="text-blue-500 animate-pulse" />
           </h1>
         </div>
-        <p className="text-xs text-slate-400 dark:text-[#94A3B8] mt-1">Please enter your credentials to access your dashboard.</p>
+        <p className="text-xs text-slate-400 dark:text-[#94A3B8] mt-1">{t("auth.login_subtitle")}</p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4 text-xs">
           <div>
-            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">Email Address</label>
+            <label className="block text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase mb-1.5 ml-1">{t("auth.email")}</label>
             <div className="relative flex items-center">
               <Mail className="absolute left-3.5 text-slate-400 dark:text-[#94A3B8]" size={16} />
               <input
@@ -59,7 +59,7 @@ export default function Login() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={t("auth.email_placeholder")}
                 className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] p-3.5 pl-11 outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 focus:bg-white dark:focus:bg-[#0B1220] transition-all duration-300 text-slate-800 dark:text-[#CBD5E1]"
               />
             </div>
@@ -67,9 +67,9 @@ export default function Login() {
           
           <div>
             <div className="flex justify-between items-center mb-1.5 ml-1">
-              <label className="text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase">Password</label>
+              <label className="text-[9px] font-bold text-slate-400 dark:text-[#94A3B8] uppercase">{t("auth.password")}</label>
               <a href="#" className="text-[9px] font-bold text-blue-500 hover:text-blue-600 hover:underline transition uppercase">
-                Forgot?
+                {t("auth.forgot_password")}
               </a>
             </div>
             <div className="relative flex items-center">
@@ -79,7 +79,7 @@ export default function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t("auth.password_placeholder_dots")}
                 className="w-full rounded-2xl border border-slate-100 dark:border-[#334155] p-3.5 pl-11 pr-11 outline-none focus:border-blue-300 bg-slate-50/50 dark:bg-[#0B1220]/50 focus:bg-white dark:focus:bg-[#0B1220] transition-all duration-300 text-slate-800 dark:text-[#CBD5E1]"
               />
               <button
@@ -104,18 +104,18 @@ export default function Login() {
             {submitting ? (
               <>
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                <span>Logging in...</span>
+                <span>{t("auth.logging_in")}</span>
               </>
             ) : (
-              <span>Log In</span>
+              <span>{t("auth.login_button")}</span>
             )}
           </motion.button>
         </form>
 
         <div className="mt-6 pt-4 border-t border-slate-100 dark:border-[#334155]/30 text-center text-xs text-slate-500 dark:text-[#94A3B8]">
-          Don't have an account?{" "}
+          {t("auth.no_account")}{" "}
           <Link to="/register" className="font-semibold text-blue-500 hover:underline">
-            Register here
+            {t("auth.register_here")}
           </Link>
         </div>
       </motion.div>
